@@ -1,2 +1,5 @@
 .env
 scratch.yml
+docker-configs/traefik/acme.json
+docker-configs/traefik/traefik.log
+docker-configs/lidarr/config
