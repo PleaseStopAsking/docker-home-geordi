@@ -11,3 +11,5 @@ docker-configs/tautulli/config
 docker-configs/duplicati/config
 docker-configs/traefik/acme.json
 docker-configs/traefik/traefik.log
+docker-configs/jackett/config
+docker-configs/lazylibrarian/config
