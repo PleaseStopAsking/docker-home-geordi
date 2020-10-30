@@ -130,7 +130,7 @@ groups:
   - name: Traefik Alerts
     rules:
       - alert: TraefikHighHttp4xxErrorRateBackend
-        expr: (sum(rate(traefik_service_requests_total{code=~"4.*"}[5m])) by (instance, service) / sum(rate(traefik_service_requests_total[5m])) by (instance, service) * 100) > 5
+        expr: (sum(rate(traefik_service_requests_total{code=~"4.*"}[5m])) by (instance, service) / sum(rate(traefik_service_requests_total[5m])) by (instance, service) * 100) > 15
         for: 5m
         labels:
           severity: critical
@@ -138,7 +138,7 @@ groups:
           summary: "Traefik high HTTP 4xx error rate backend (service {{ $labels.service }} on {{ $labels.instance }})"
           description: "Traefik backend 4xx error rate is above 5%"
       - alert: TraefikHighHttp5xxErrorRateBackend
-        expr: (sum(rate(traefik_service_requests_total{code=~"5.*"}[5m])) by (instance, service) / sum(rate(traefik_service_requests_total[5m])) by (instance, service) * 100) > 5
+        expr: (sum(rate(traefik_service_requests_total{code=~"5.*"}[5m])) by (instance, service) / sum(rate(traefik_service_requests_total[5m])) by (instance, service) * 100) > 15
         for: 5m
         labels:
           severity: critical
