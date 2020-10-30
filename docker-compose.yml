@@ -261,9 +261,9 @@ services:
       - "9090:9090"
     volumes:
       - "./docker-configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
-      - "./docker-configs/prometheus:/var/lib/prometheus"
-      - "./docker-configs/prometheus:/prometheus"
-      - "./docker-configs/prometheus:/etc/prometheus"
+      - "./docker-configs/prometheus/config:/var/lib/prometheus"
+      - "./docker-configs/prometheus/config:/prometheus"
+      - "./docker-configs/prometheus/config:/etc/prometheus"
       - "./docker-configs/prometheus/alertrules.yml:/etc/prometheus/alertrules.yml"
     environment:
       - TZ=${timezone}
