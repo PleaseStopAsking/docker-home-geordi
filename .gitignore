@@ -3,3 +3,5 @@ scratch.yml
 docker-configs/traefik/acme.json
 docker-configs/traefik/traefik.log
 docker-configs/lidarr/config
+docker-configs/plex/database
+docker-configs/plex/config
