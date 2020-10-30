@@ -1,0 +1,50 @@
+tls:
+  options:
+    default:
+      minVersion: VersionTLS12
+      sniStrict: true
+      curvePreferences:
+        - secp521r1
+        - secp384r1
+      cipherSuites:
+        - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+
+    mintls13:
+      minVersion: VersionTLS13
+# THIS SECTION IS COMMENTED OUT AS I AM ADDING ALL THESE VALUES VIA LABELS. NEED TO FIND OUT HOW THESE VALUES ARE APPLIED IF SOME ARE ALREADY APPLIED VIA LABELS FIRST.
+#http:
+#  middlewares:
+#    ratelimits:
+#      rateLimit:
+#        average: 100
+#        burst: 50
+#secureheaders:
+#headers:
+#forceSTSHeader: true
+#sslRedirect: true
+#stsPreload: true
+#contentTypeNosniff: true
+#browserXssFilter: true
+#stsIncludeSubdomains: true
+#stsSeconds: 63072000
+#accessControlAllowMethods:
+#  - GET
+#  - OPTIONS
+#  - PUT
+#accessControlMaxAge: 100
+#addVaryHeader: true
+#frameDeny: true
+#sslForceHost: true
+#hostsProxyHeaders: ["X-Forwarded-For"]
+#sslProxyHeaders:
+#  X-Forwarded-Proto: https
+#referrerPolicy: same-origin
+#featurePolicy: camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
+#customResponseHeaders:
+#  X-Custom-Response-Header: X-Robots-Tag=none,noarchive,nosnippet,notranslate,noimageindex
+#contentSecurityPolicy: "default-src *; object-src 'none'"

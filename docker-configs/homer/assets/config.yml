@@ -1,0 +1,134 @@
+title: "Enterprise"
+subtitle: "USS"
+logo: "/assets/icons/enterprise.png"
+
+header: true
+footer: false
+
+columns: "auto" # "auto" or number (must be a factor of 12: 1, 2, 3, 4, 6, 12)
+connectivityCheck: true # whether you want to display a message when the apps are not accessible anymore (VPN disco$
+
+# Optional theming
+theme: default # 'default' or one of the theme available in 'src/assets/themes'.
+
+# Here is the exaustive list of customization parameters
+# However all value are optional and will fallback to default if not set.
+# if you want to change only some of the colors, feel free to remove all unused key.
+colors:
+  light:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#f5f5f5"
+    card-background: "#ffffff"
+    text: "#363636"
+    text-header: "#424242"
+    text-title: "#303030"
+    text-subtitle: "#424242"
+    card-shadow: rgba(0, 0, 0, 0.1)
+    link-hover: "#363636"
+    background-image: "assets/your/light/bg.png"
+  dark:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#131313"
+    card-background: "#2b2b2b"
+    text: "#eaeaea"
+    text-header: "#ffffff"
+    text-title: "#fafafa"
+    text-subtitle: "#f5f5f5"
+    card-shadow: rgba(0, 0, 0, 0.4)
+    link-hover: "#ffdd57"
+    background-image: "assets/your/dark/bg.png"
+
+links: []
+
+# Services
+# First level array represent a group.
+# Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
+services:
+  - name: "Media"
+    icon: "fa fa-film"
+    items:
+      - name: "Plex"
+        logo: "assets/icons/plex.png"
+        subtitle: "Media Server"
+        url: "http://192.168.4.46:32400/web/index.html"
+      - name: "Transmission"
+        logo: "assets/icons/transmission.png"
+        subtitle: "BitTorrent Client"
+        url: "http://192.168.4.46:9091"
+      - name: "Radarr"
+        logo: "assets/icons/radarr.png"
+        subtitle: "Movie PVR + BitTorrent"
+        url: "http://192.168.4.46:7878"
+      - name: "Radarr (4K)"
+        logo: "assets/icons/radarr.png"
+        subtitle: "Movie PVR + BitTorrent"
+        url: "http://192.168.4.46:7879"
+      - name: "Sonarr"
+        logo: "assets/icons/sonarr.png"
+        subtitle: "Television PVR + BitTorrent"
+        url: "http://192.168.4.46:8989"
+      - name: "Lidarr"
+        logo: "assets/icons/lidarr.png"
+        subtitle: "Music PVR + BitTorrent"
+        url: "http://192.168.4.46:8686"
+      - name: "LazyLibrarian"
+        logo: "assets/icons/lazylibrarian.png"
+        subtitle: "Book PVR + BitTorrent"
+        url: "http://192.168.4.46:5299"
+      - name: "Jackett"
+        logo: "assets/icons/jackett.png"
+        subtitle: "BitTorrent Tracker API"
+        url: "http://192.168.4.46:9117"
+  - name: "Monitoring"
+    icon: "fas fa-heartbeat"
+    items:
+      - name: "Portainer"
+        logo: "assets/icons/portainer.png"
+        subtitle: "Docker UI"
+        url: "http://192.168.4.46:9000/"
+      - name: "Prometheus"
+        logo: "assets/icons/prometheus.png"
+        subtitle: "Dimensional Monitoring"
+        url: "http://192.168.4.46:9090"
+      - name: "AlertManager"
+        logo: "assets/icons/alertmanager.png"
+        subtitle: "Alert Aggregration"
+        url: "http://192.168.4.46:9093"
+      - name: "Grafana"
+        logo: "assets/icons/grafana.png"
+        subtitle: "Analytics & Monitoring"
+        url: "http://192.168.4.46:3000"
+      - name: "Tautulli"
+        logo: "assets/icons/tautulli.png"
+        subtitle: "Plex Monitoring"
+        url: "http://192.168.4.46:8181"
+      - name: "Traefik"
+        logo: "assets/icons/traefik.png"
+        subtitle: "Edge Routing"
+        url: "http://192.168.4.46:8080/dashboard/"
+  - name: "Storage"
+    icon: "fas fa-database"
+    items:
+      - name: "OpenMediaVault"
+        logo: "assets/icons/omv.png"
+        subtitle: "Network Storage"
+        url: "http://192.168.4.46:6080/"
+      - name: "Duplicati"
+        logo: "assets/icons/duplicati.png"
+        subtitle: "Cloud Storage Backups"
+        url: "http://192.168.4.46:8200/"
+  - name: "External Services"
+    icon: "fa fa-cloud"
+    items:
+      - name: "Duck DNS"
+        logo: "assets/icons/duckdns.png"
+        subtitle: "Dynamic DNS"
+        url: "https://www.duckdns.org"
+      - name: "Pushover"
+        logo: "assets/icons/pushover.svg"
+        subtitle: "Alert Notifications"
+        url: "https://pushover.net"

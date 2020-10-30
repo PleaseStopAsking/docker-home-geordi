@@ -1,0 +1,54 @@
+###################
+##### GENERAL #####
+###################
+
+# directory containing configuration files for containers. AKA, where you want your persistent data to live !! NOT USED !!
+#persistent_path=/root
+
+# really? its pretty self explanatory on this one
+timezone=US/Eastern
+
+# directory containing data (movies, series etc...)
+data_folder_path=/srv
+
+# cidr range of local network. Must include the mask such as 192.168.0.0/16
+docker_host_network_cidr=192.168.4.0/24
+
+# ip address of docker host
+docker_host_ip=192.168.4.46
+
+########################
+##### TRANSMISSION #####
+########################
+
+transmission_openvpn_username=username@example.com
+transmission_openvpn_password=NotARealPassword
+transmission_home_dir=/data/dev-disk-by-label-scratch/downloads/transmission-home
+transmission_downloaded_dir=/data/dev-disk-by-label-scratch/downloads/completed
+transmission_incomplete_dir=/data/dev-disk-by-label-scratch/downloads/incomplete
+
+################
+##### PLEX #####
+################
+
+plex_hostname=server01
+plex_claim_token=<REPLACEME>
+
+###################
+##### GRAFANA #####
+###################
+
+grafana_password=NotARealPassword
+
+###################
+##### TRAEFIK #####
+###################
+
+# root subdomain name for all applications
+traefik_duckdns_domain=placeholder.duckdns.org
+
+# token from your duckdns account home page
+traefik_duckdns_token=<REPLACEME>
+
+# cred must be generated with a tool such as HTPASSWD or https://www.web2generators.com/apache-tools/htpasswd-generator !! NOT USED !!
+#traefik_cred=<DUMBADMINUSERNAME:PASSWORDSTRING>

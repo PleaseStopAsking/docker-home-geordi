@@ -1,0 +1,357 @@
+version: "3"
+
+services:
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    hostname: node-exporter
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    volumes:
+      - ${data_folder_path}:/data
+
+  cadvisor:
+    image: gcr.io/google-containers/cadvisor
+    container_name: cadvisor
+    hostname: cadvisor
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    command:
+      - "--port=8081"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  transmission:
+    image: haugene/transmission-openvpn
+    container_name: transmission
+    hostname: transmission
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    ports:
+      - "9091:9091"
+    volumes:
+      - ./docker-configs/transmission/config:/config
+      - ${data_folder_path}:/data
+    environment:
+      - CREATE_TUN_DEVICE=true
+      - OPENVPN_PROVIDER=NORDVPN
+      - OPENVPN_USERNAME=${transmission_openvpn_username}
+      - OPENVPN_PASSWORD=${transmission_openvpn_password}
+      - OPENVPN_OPTS=--inactive 3600 --ping 10 --ping-exit 60
+      - NORDVPN_CATEGORY=legacy_p2p
+      - NORDVPN_COUNTRY=US
+      - WEBPROXY_ENABLED=false
+      - LOCAL_NETWORK=${docker_host_network_cidr}
+      - TZ=${timezone}
+      - TRANSMISSION_SCRAPE_PAUSED_TORRENTS_ENABLED=false
+      - TRANSMISSION_WEB_UI=combustion
+      - TRANSMISSION_RATIO_LIMIT=1
+      - TRANSMISSION_RATIO_LIMIT_ENABLED=true
+      - TRANSMISSION_WATCH_DIR_ENABLED=false
+      - TRANSMISSION_LPD_ENABLED=true
+      - TRANSMISSION_DOWNLOAD_QUEUE_SIZE=30
+      - TRANSMISSION_HOME=${transmission_home_dir}
+      - TRANSMISSION_DOWNLOAD_DIR=${transmission_downloaded_dir}
+      - TRANSMISSION_INCOMPLETE_DIR=${transmission_incomplete_dir}
+    cap_add:
+      - NET_ADMIN
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+
+  watchtower:
+    image: v2tec/watchtower
+    container_name: watchtower
+    hostname: watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    #environment:
+    #WATCHTOWER_MONITOR_ONLY=true
+    #WATCHTOWER_NOTIFICATIONS=email
+    #WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER=null
+    #WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD=null
+    #WATCHTOWER_NOTIFICATION_EMAIL_FROM=from-address@your-domain.com
+    #WATCHTOWER_NOTIFICATION_EMAIL_TO=to-address@your-domain.com
+    #WATCHTOWER_NOTIFICATION_EMAIL_SERVER=smtp.your-domain.com
+    #WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT=25
+    #WATCHTOWER_NOTIFICATION_EMAIL_DELAY=2
+    #WATCHTOWER_CLEANUP=true
+
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett
+    hostname: jackett
+    restart: unless-stopped
+    ports:
+      - 9117:9117
+    volumes:
+      - ./docker-configs/jackett/config:/config
+      - ./docker-configs/jackett/blackhole:/downloads
+    environment:
+      - TZ=${timezone}
+      - AUTO_UPDATE=true
+    depends_on:
+      - transmission
+
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    hostname: sonarr
+    restart: unless-stopped
+    ports:
+      - 8989:8989
+    volumes:
+      - ./docker-configs/sonarr/config:/config
+      - ${data_folder_path}:/data
+    environment:
+      - TZ=${timezone}
+    depends_on:
+      - transmission
+
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    hostname: radarr
+    restart: unless-stopped
+    ports:
+      - 7878:7878
+    volumes:
+      - ./docker-configs/radarr/config:/config
+      - ${data_folder_path}:/data
+    environment:
+      - TZ=${timezone}
+    depends_on:
+      - transmission
+
+  radarr-4k:
+    image: linuxserver/radarr
+    container_name: radarr-4k
+    hostname: radarr-4k
+    restart: unless-stopped
+    ports:
+      - 7879:7878
+    volumes:
+      - ./docker-configs/radarr-4k/config:/config
+      - ${data_folder_path}:/data
+    environment:
+      - TZ=${timezone}
+    depends_on:
+      - transmission
+
+  lidarr:
+    image: linuxserver/lidarr
+    container_name: lidarr
+    hostname: lidarr
+    restart: unless-stopped
+    ports:
+      - 8686:8686
+    volumes:
+      - ./docker-configs/lidarr/config:/config
+      - ${data_folder_path}:/data
+    environment:
+      - TZ=${timezone}
+    depends_on:
+      - transmission
+
+  lazylibrarian:
+    image: linuxserver/lazylibrarian
+    container_name: lazylibrarian
+    hostname: lazylibrarian
+    restart: unless-stopped
+    ports:
+      - 5299:5299
+    volumes:
+      - ./docker-configs/lazylibrarian/config:/config
+      - ${data_folder_path}:/books
+    environment:
+      - TZ=${timezone}
+    depends_on:
+      - transmission
+
+  plex:
+    image: plexinc/pms-docker
+    container_name: plex
+    hostname: plex
+    restart: unless-stopped
+    ports:
+      - 32400:32400/tcp
+      - 32400:32400/udp
+      - 3005:3005/tcp
+      - 8324:8324/tcp
+      - 32469:32469/tcp
+      - 1900:1900/udp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+    environment:
+      - TZ=${timezone}
+      - PLEX_CLAIM=${plex_claim_token}
+      - ADVERTISE_IP=https://plex.${traefik_duckdns_domain}:443,https://${docker_host_ip}:32400
+      - ALLOWED_NETWORKS=${docker_host_network_cidr}
+      - HOSTNAME=${plex_hostname}
+    volumes:
+      - ./docker-configs/plex/database:/config
+      - ./docker-configs/plex/config:/transcode
+      - ${data_folder_path}:/data
+    labels:
+      - "traefik.enable=true"
+      # Routers
+      - "traefik.http.routers.plex.rule=Host(`plex.${traefik_duckdns_domain}`)"
+      - "traefik.http.routers.plex.entrypoints=https"
+      - "traefik.http.services.plex.loadbalancer.server.port=32400"
+      - "traefik.http.routers.plex.tls=true"
+      - "traefik.http.routers.plex.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.plex.middlewares=plex-secureheaders,plex-ratelimit"
+      # Middleware
+      #- "traefik.http.middlewares.plex-secureheaders.headers.accessControlAllowOriginList=https://plex.${traefik_duckdns_domain}" TODO - Does not seem to add the header as expected. Using customResponseHeader below for this!
+      - "traefik.http.middlewares.plex-secureheaders.headers.accessControlAllowMethods=GET, OPTIONS, PUT"
+      - "traefik.http.middlewares.plex-secureheaders.headers.accessControlMaxAge=100"
+      - "traefik.http.middlewares.plex-secureheaders.headers.addVaryHeader=true"
+      - "traefik.http.middlewares.plex-secureheaders.headers.hostsProxyHeaders=X-Forwarded-Host"
+      - "traefik.http.middlewares.plex-secureheaders.headers.sslRedirect=true"
+      - "traefik.http.middlewares.plex-secureheaders.headers.sslForceHost=true"
+      - "traefik.http.middlewares.plex-secureheaders.headers.sslProxyHeaders.X-Forwarded-Proto=https"
+      - "traefik.http.middlewares.plex-secureheaders.headers.stsSeconds=63072000"
+      - "traefik.http.middlewares.plex-secureheaders.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.plex-secureheaders.headers.stsPreload=true"
+      - "traefik.http.middlewares.plex-secureheaders.headers.forceSTSHeader=true"
+      - "traefik.http.middlewares.plex-secureheaders.headers.frameDeny=true"
+      - "traefik.http.middlewares.plex-secureheaders.headers.contentTypeNosniff=true"
+      - "traefik.http.middlewares.plex-secureheaders.headers.browserXssFilter=true"
+      - "traefik.http.middlewares.plex-secureheaders.headers.referrerPolicy=strict-origin-when-cross-origin"
+      - "traefik.http.middlewares.plex-secureheaders.headers.contentSecurityPolicy=default-src 'none'; base-uri 'self'; script-src 'self' 'sha256-4yWHSc589xcanc7GAAy3++M4EvUxNtUsJySeoYEE6z8=' 'sha256-9YWnVu29Ew4LEW4tEiPWEdcHvzlbbwpiazu4PZR3oTY='; style-src 'self'; img-src 'self' https://provider-static.plex.tv data: blob:; font-src 'self' data:; connect-src 'self' https://plex.tv https://*.plex.direct:* wss://*.plex.direct:* wss://pubsub.plex.tv; media-src 'self' https://*.plex.direct:*; object-src 'self'; child-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; referrer no-referrer"
+      - "traefik.http.middlewares.plex-secureheaders.headers.featurePolicy=camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
+      - "traefik.http.middlewares.plex-secureheaders.headers.customResponseHeaders.X-Robots-Tag=none,noarchive,nosnippet,notranslate,noimageindex"
+      - "traefik.http.middlewares.plex-secureheaders.headers.customResponseHeaders.Access-Control-Allow-Origin=https://plex.${traefik_duckdns_domain}"
+      #- "traefik.http.middlewares.plex-secureheaders.headers.allowedHosts=plex.${traefik_duckdns_domain}" TODO - Plex app never loads data!
+      #- "traefik.http.middlewares.plex-secureheaders.headers.sslHost=plex.${traefik_duckdns_domain}" # TODO - Allows Plex app to load data but nothing plays!
+      - "traefik.http.middlewares.plex-ratelimit.ratelimit.average=100"
+      - "traefik.http.middlewares.plex-ratelimit.ratelimit.burst=50"
+
+  tautulli:
+    image: linuxserver/tautulli
+    container_name: tautulli
+    hostname: tautulli
+    restart: always
+    ports:
+      - 8181:8181
+    environment:
+      - TZ=${timezone}
+    volumes:
+      - ./docker-configs/tautulli/config:/config
+      - ./docker-configs/plex/database/Library/Application Support/Plex Media Server/Logs:/logs:ro
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    hostname: prometheus
+    restart: unless-stopped
+    user: root
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./docker-configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+      - "./docker-configs/prometheus:/var/lib/prometheus"
+      - "./docker-configs/prometheus:/prometheus"
+      - "./docker-configs/prometheus:/etc/prometheus"
+      - "./docker-configs/prometheus/alertrules.yml:/etc/prometheus/alertrules.yml"
+    environment:
+      - TZ=${timezone}
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--web.route-prefix=/"
+      - "--storage.tsdb.retention.time=200h"
+      - "--web.enable-lifecycle"
+
+  alertmanager:
+    image: prom/alertmanager
+    container_name: alertmanager
+    hostname: alertmanager
+    restart: unless-stopped
+    ports:
+      - 9093:9093
+    volumes:
+      - "./docker-configs/alertmanager/config.yml:/config.yml"
+      - "./docker-configs/alertmanager:/alertmanager"
+    command:
+      - "--config.file=/config.yml"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    hostname: grafana
+    restart: unless-stopped
+    user: root
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./docker-configs/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./docker-configs/grafana:/var/lib/grafana
+      - ./docker-configs/grafana/logs:/var/log/grafana
+      - ./docker-configs/grafana/plugins:/var/lib/grafana/plugins
+      - ./docker-configs/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${grafana_password}
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    depends_on:
+      - prometheus
+
+  homer:
+    image: b4bz/homer
+    container_name: homer
+    hostname: homer
+    restart: unless-stopped
+    ports:
+      - "8888:8080"
+    volumes:
+      - ./docker-configs/homer/assets/config.yml:/www/config.yml:ro
+      - ./docker-configs/homer/assets:/www/assets
+
+  duplicati:
+    image: linuxserver/duplicati
+    container_name: duplicati
+    hostname: duplicati
+    restart: unless-stopped
+    ports:
+      - 8200:8200
+    environment:
+      - TZ=${timezone}
+      - CLI_ARGS=--backup-test-samples=0
+    volumes:
+      - ./docker-configs/duplicati/config:/config
+      - ./backups:/backups
+      - ./docker-configs:/source
+
+  traefik:
+    image: traefik:v2.2
+    container_name: traefik
+    hostname: traefik
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker-configs/traefik/acme.json:/acme.json
+      - ./docker-configs/traefik/traefik.yml:/traefik.yml
+      - ./docker-configs/traefik/configs:/configs
+      - ./docker-configs/traefik/traefik.log:/traefik.log
+    environment:
+      - DUCKDNS_TOKEN=${traefik_duckdns_token}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.service=api@internal"
