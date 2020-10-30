@@ -10,3 +10,5 @@ docker-configs/radarr-4k/config
 docker-configs/sonarr/config
 docker-configs/transmission/config
 docker-configs/tautulli/config
+docker-configs/duplicati/config
+
