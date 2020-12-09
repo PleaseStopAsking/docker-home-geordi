@@ -52,8 +52,8 @@ UP_THRESHOLD=250
 # start a sync job when DEL_THRESHOLD is breached due to false alarm.
 # Set to 0 to ALWAYS force a sync (i.e. ignore the delete threshold above)
 # Set to -1 to NEVER force a sync (i.e. need to manual sync if delete threshold is breached)
-#SYNC_WARN_THRESHOLD=3
-SYNC_WARN_THRESHOLD=0
+SYNC_WARN_THRESHOLD=3
+#SYNC_WARN_THRESHOLD=0
 
 # Set percentage of array to scrub if it is in sync.
 # i.e. 0 to disable and 100 to scrub the full array in one go
@@ -73,7 +73,7 @@ MAIL_BIN="/usr/bin/mail"
 MANAGE_SERVICES=1
 
 # Containers to manage (separated with spaces).
-SERVICES='plex sonarr radarr radarr-4k lidarr transmission tautulli duplicati'
+SERVICES='plex sonarr radarr lidarr transmission duplicati traefik'
 
 function main(){
 
