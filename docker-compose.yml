@@ -132,21 +132,6 @@ services:
     depends_on:
       - transmission
 
-  radarr-4k:
-    image: linuxserver/radarr
-    container_name: radarr-4k
-    hostname: radarr-4k
-    restart: unless-stopped
-    ports:
-      - 7879:7878
-    volumes:
-      - ./docker-configs/radarr-4k/config:/config
-      - ${data_folder_path}:/data
-    environment:
-      - TZ=${timezone}
-    depends_on:
-      - transmission
-
   lidarr:
     image: linuxserver/lidarr
     container_name: lidarr
@@ -237,19 +222,6 @@ services:
       #- "traefik.http.middlewares.plex-secureheaders.headers.sslHost=plex.${traefik_duckdns_domain}" # TODO - Allows Plex app to load data but nothing plays!
       - "traefik.http.middlewares.plex-ratelimit.ratelimit.average=100"
       - "traefik.http.middlewares.plex-ratelimit.ratelimit.burst=50"
-
-  tautulli:
-    image: linuxserver/tautulli
-    container_name: tautulli
-    hostname: tautulli
-    restart: always
-    ports:
-      - 8181:8181
-    environment:
-      - TZ=${timezone}
-    volumes:
-      - ./docker-configs/tautulli/config:/config
-      - ./docker-configs/plex/database/Library/Application Support/Plex Media Server/Logs:/logs:ro
 
   prometheus:
     image: prom/prometheus
