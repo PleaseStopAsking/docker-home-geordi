@@ -4,10 +4,8 @@ docker-configs/lidarr/config
 docker-configs/plex/database
 docker-configs/plex/config
 docker-configs/radarr/config
-docker-configs/radarr-4k/config
 docker-configs/sonarr/config
 docker-configs/transmission/config
-docker-configs/tautulli/config
 docker-configs/duplicati/config
 docker-configs/traefik/acme.json
 docker-configs/traefik/traefik.log
