@@ -30,8 +30,14 @@ scrape_configs:
         labels:
           instance: "geordi"
 
-  - job_name: "traefik"
+  #- job_name: "traefik"
+  #  static_configs:
+  #    - targets: ["traefik:8082"]
+  #      labels:
+  #        instance: "geordi"
+
+  - job_name: "pihole"
     static_configs:
-      - targets: ["traefik:8082"]
+      - targets: ["192.168.4.71:9617"]
         labels:
-          instance: "geordi"
+          instance: "worf"
