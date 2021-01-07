@@ -68,23 +68,16 @@ services:
         max-size: 10m
 
   watchtower:
-    image: v2tec/watchtower
+    image: containrrr/watchtower
     container_name: watchtower
     hostname: watchtower
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    #environment:
-    #WATCHTOWER_MONITOR_ONLY=true
-    #WATCHTOWER_NOTIFICATIONS=email
-    #WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER=null
-    #WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD=null
-    #WATCHTOWER_NOTIFICATION_EMAIL_FROM=from-address@your-domain.com
-    #WATCHTOWER_NOTIFICATION_EMAIL_TO=to-address@your-domain.com
-    #WATCHTOWER_NOTIFICATION_EMAIL_SERVER=smtp.your-domain.com
-    #WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT=25
-    #WATCHTOWER_NOTIFICATION_EMAIL_DELAY=2
-    #WATCHTOWER_CLEANUP=true
+    environment:
+      - TZ=${timezone}
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=43200
 
   jackett:
     image: linuxserver/jackett
