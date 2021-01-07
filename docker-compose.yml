@@ -9,7 +9,7 @@ services:
     ports:
       - "9100:9100"
     volumes:
-      - ${data_folder_path}:/data
+      - ${data_folder_path}:/data:ro
 
   cadvisor:
     image: gcr.io/google-containers/cadvisor
@@ -22,7 +22,7 @@ services:
       - "--port=8081"
     volumes:
       - /:/rootfs:ro
-      - /var/run:/var/run:rw
+      - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
 
@@ -187,7 +187,7 @@ services:
     volumes:
       - ./docker-configs/plex/database:/config
       - ./docker-configs/plex/config:/transcode
-      - ${data_folder_path}:/data
+      - ${data_folder_path}:/data:ro
     labels:
       - "traefik.enable=true"
       # Routers
@@ -236,7 +236,7 @@ services:
       - "./docker-configs/prometheus/config:/var/lib/prometheus"
       - "./docker-configs/prometheus/config:/prometheus"
       - "./docker-configs/prometheus/config:/etc/prometheus"
-      - "./docker-configs/prometheus/alertrules.yml:/etc/prometheus/alertrules.yml"
+      - "./docker-configs/prometheus/alertrules.yml:/etc/prometheus/alertrules.yml:ro"
     environment:
       - TZ=${timezone}
     command:
@@ -256,7 +256,7 @@ services:
     ports:
       - 9093:9093
     volumes:
-      - "./docker-configs/alertmanager/config.yml:/config.yml"
+      - "./docker-configs/alertmanager/config.yml:/config.yml:ro"
       - "./docker-configs/alertmanager:/alertmanager"
     command:
       - "--config.file=/config.yml"
@@ -270,7 +270,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./docker-configs/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./docker-configs/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
       - ./docker-configs/grafana:/var/lib/grafana
       - ./docker-configs/grafana/logs:/var/log/grafana
       - ./docker-configs/grafana/plugins:/var/lib/grafana/plugins
@@ -320,8 +320,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./docker-configs/traefik/acme.json:/acme.json
-      - ./docker-configs/traefik/traefik.yml:/traefik.yml
-      - ./docker-configs/traefik/configs:/configs
+      - ./docker-configs/traefik/traefik.yml:/traefik.yml:ro
+      - ./docker-configs/traefik/configs:/configs:ro
       - ./docker-configs/traefik/traefik.log:/traefik.log
     environment:
       - DUCKDNS_TOKEN=${traefik_duckdns_token}
