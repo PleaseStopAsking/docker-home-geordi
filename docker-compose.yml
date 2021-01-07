@@ -246,6 +246,7 @@ services:
     volumes:
       - "./docker-configs/alertmanager/config.yml:/config.yml:ro"
       - "./docker-configs/alertmanager:/alertmanager"
+      - "./docker-configs/alertmanager/data:/data"
     command:
       - "--config.file=/config.yml"
 
