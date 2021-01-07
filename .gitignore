@@ -37,3 +37,5 @@ docker-configs/homer/assets/config.yml.dist
 docker-configs/homer/assets/config.yml.dist.sample-sui
 docker-configs/homer/assets/custom.css.sample
 docker-configs/homer/assets/manifest.json
+docker-configs/traefik/acme.json
+docker-configs/traefik/traefik.log
