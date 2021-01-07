@@ -12,7 +12,7 @@ services:
       - ${data_folder_path}:/data:ro
 
   cadvisor:
-    image: gcr.io/google-containers/cadvisor
+    image: gcr.io/google-containers/cadvisor:v0.36.0
     container_name: cadvisor
     hostname: cadvisor
     restart: unless-stopped
