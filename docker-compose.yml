@@ -295,6 +295,7 @@ services:
       - ./docker-configs/duplicati/config:/config
       - ./backups:/backups
       - ./docker-configs:/source
+      - ${data_folder_path}:/srv:ro
 
   traefik:
     image: traefik:v2.3
