@@ -276,7 +276,7 @@ services:
       - ./docker-configs/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
       - ./docker-configs/grafana:/var/lib/grafana
       - ./docker-configs/grafana/logs:/var/log/grafana
-      - ./docker-configs/grafana/plugins:/var/lib/grafana/plugins
+      - ./docker-configs/grafana/provisioning/plugins:/var/lib/grafana/plugins
       - ./docker-configs/grafana/provisioning:/etc/grafana/provisioning
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${grafana_password}
