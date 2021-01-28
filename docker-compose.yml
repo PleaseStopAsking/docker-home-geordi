@@ -60,8 +60,6 @@ services:
       - TRANSMISSION_HOME=${transmission_home_dir}
       - TRANSMISSION_DOWNLOAD_DIR=${transmission_downloaded_dir}
       - TRANSMISSION_INCOMPLETE_DIR=${transmission_incomplete_dir}
-      - PUID=${uid}
-      - GUID=${gid}
     cap_add:
       - NET_ADMIN
     logging:
@@ -94,13 +92,11 @@ services:
     environment:
       - TZ=${timezone}
       - AUTO_UPDATE=true
-      - PUID=${uid}
-      - GUID=${gid}
     depends_on:
       - transmission
 
   sonarr:
-    image: linuxserver/sonarr
+    image: linuxserver/sonarr:preview
     container_name: sonarr
     hostname: sonarr
     restart: unless-stopped
@@ -111,8 +107,6 @@ services:
       - ${data_folder_path}:/data
     environment:
       - TZ=${timezone}
-      - PUID=${uid}
-      - GUID=${gid}
     depends_on:
       - transmission
 
@@ -128,8 +122,6 @@ services:
       - ${data_folder_path}:/data
     environment:
       - TZ=${timezone}
-      - PUID=${uid}
-      - GUID=${gid}
     depends_on:
       - transmission
 
@@ -145,8 +137,6 @@ services:
       - ${data_folder_path}:/data
     environment:
       - TZ=${timezone}
-      - PUID=${uid}
-      - GUID=${gid}
     depends_on:
       - transmission
 
@@ -162,8 +152,6 @@ services:
       - ${data_folder_path}:/books
     environment:
       - TZ=${timezone}
-      - PUID=${uid}
-      - GUID=${gid}
     depends_on:
       - transmission
 
@@ -184,8 +172,6 @@ services:
       - ADVERTISE_IP=https://plex.${traefik_duckdns_domain}:443,https://${docker_host_ip}:32400
       - ALLOWED_NETWORKS=${docker_host_network_cidr}
       - HOSTNAME=${plex_hostname}
-      - PLEX_UID=${uid}
-      - PLEX_GID=${gid}
     volumes:
       - ./docker-configs/plex/database:/config
       - ./docker-configs/plex/config:/transcode
@@ -294,9 +280,6 @@ services:
     volumes:
       - ./docker-configs/homer/assets/config.yml:/www/config.yml:ro
       - ./docker-configs/homer/assets:/www/assets
-    environment:
-      - UID=${uid}
-      - GID=${gid}
 
   duplicati:
     image: linuxserver/duplicati
@@ -308,8 +291,6 @@ services:
     environment:
       - TZ=${timezone}
       - CLI_ARGS=--backup-test-samples=0
-      - PUID=${uid}
-      - GUID=${gid}
     volumes:
       - ./docker-configs/duplicati/config:/config
       - ./backups:/backups
