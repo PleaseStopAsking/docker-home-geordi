@@ -73,7 +73,7 @@ MAIL_BIN="/usr/bin/mail"
 MANAGE_SERVICES=1
 
 # Containers to manage (separated with spaces).
-SERVICES='plex sonarr radarr lidarr transmission duplicati traefik'
+SERVICES='plex sonarr radarr lidarr transmission traefik'
 
 function main(){
 
