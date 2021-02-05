@@ -107,6 +107,8 @@ services:
       - ${data_folder_path}:/data
     environment:
       - TZ=${timezone}
+      - GUID=${gid}
+      - PUID=${uid}
     depends_on:
       - transmission
 
@@ -122,6 +124,8 @@ services:
       - ${data_folder_path}:/data
     environment:
       - TZ=${timezone}
+      - GUID=${gid}
+      - PUID=${uid}
     depends_on:
       - transmission
 
@@ -137,6 +141,8 @@ services:
       - ${data_folder_path}:/data
     environment:
       - TZ=${timezone}
+      - GUID=${gid}
+      - PUID=${uid}
     depends_on:
       - transmission
 
@@ -152,6 +158,8 @@ services:
       - ${data_folder_path}:/books
     environment:
       - TZ=${timezone}
+      - GUID=${gid}
+      - PUID=${uid}
     depends_on:
       - transmission
 
@@ -290,7 +298,9 @@ services:
       - 8200:8200
     environment:
       - TZ=${timezone}
-      - CLI_ARGS=--backup-test-samples=0
+      #- CLI_ARGS=--backup-test-samples=0
+      - GUID=${gid}
+      - PUID=${uid}
     volumes:
       - ./docker-configs/duplicati/config:/config
       - ./backups:/backups
