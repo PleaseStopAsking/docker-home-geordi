@@ -1,0 +1,143 @@
+---
+collections:
+  A&E:
+    collection_order: alpha
+    tmdb_network: 129
+  ABC:
+    collection_order: alpha
+    tmdb_network: 2
+  ABC Family:
+    collection_order: alpha
+    tmdb_network: 75
+  AMC:
+    collection_order: alpha
+    tmdb_network: 174
+  Adult Swim:
+    collection_order: alpha
+    tmdb_network: 80
+  Amazon:
+    collection_order: alpha
+    tmdb_network: 1024
+  Animal Planet:
+    collection_order: alpha
+    tmdb_network: 91
+  Apple TV+:
+    collection_order: alpha
+    tmdb_network: 2552
+  CBS:
+    collection_order: alpha
+    tmdb_network: 16
+  Cartoon Network:
+    collection_order: alpha
+    tmdb_network: 56
+  Comedy Central:
+    collection_order: alpha
+    tmdb_network: 47
+  Discovery:
+    collection_order: alpha
+    tmdb_network: 64
+  Discovery+:
+    collection_order: alpha
+    tmdb_network: 4353
+  Disney Channel:
+    collection_order: alpha
+    tmdb_network: 54
+  Disney Junior:
+    collection_order: alpha
+    tmdb_network: 281
+  Disney XD:
+    collection_order: alpha
+    tmdb_network: 44
+  Disney+:
+    collection_order: alpha
+    tmdb_network: 2739
+  FOX:
+    collection_order: alpha
+    tmdb_network: 19
+  FX:
+    collection_order: alpha
+    tmdb_network: 88
+  Food Network:
+    collection_order: alpha
+    tmdb_network: 143
+  HBO:
+    collection_order: alpha
+    tmdb_network: 49
+  HBO Max:
+    collection_order: alpha
+    tmdb_network: 3186
+  HGTV:
+    collection_order: alpha
+    tmdb_network: 210
+  Hulu:
+    collection_order: alpha
+    tmdb_network: 453
+  MTV:
+    collection_order: alpha
+    tmdb_network: 33
+  NBC:
+    collection_order: alpha
+    tmdb_network: 6
+  National Geographic:
+    collection_order: alpha
+    tmdb_network: 43
+  Netflix:
+    collection_order: alpha
+    tmdb_network: 213
+  Nickelodeon:
+    collection_order: alpha
+    tmdb_network: 13
+  Nick Jr:
+    collection_order: alpha
+    tmdb_network: 35
+  Nicktoons:
+    collection_order: alpha
+    tmdb_network: 224
+  PBS:
+    collection_order: alpha
+    tmdb_network: 14
+  PBS Kids:
+    collection_order: alpha
+    tmdb_network: 122
+  Paramount:
+    collection_order: alpha
+    tmdb_network: 2076
+  Paramount+:
+    collection_order: alpha
+    tmdb_network: 4330
+  SYFY:
+    collection_order: alpha
+    tmdb_network: 77
+  Showtime:
+    collection_order: alpha
+    tmdb_network: 67
+  Starz:
+    collection_order: alpha
+    tmdb_network: 318
+  TBS:
+    collection_order: alpha
+    tmdb_network: 68
+  TNT:
+    collection_order: alpha
+    tmdb_network: 41
+  The CW:
+    collection_order: alpha
+    tmdb_network: 71
+  The WB:
+    collection_order: alpha
+    tmdb_network: 21
+  Toon Disney:
+    collection_order: alpha
+    tmdb_network: 142
+  USA:
+    collection_order: alpha
+    tmdb_network: 30
+plex:
+  library: TV Shows
+  library_type: show
+  sync_mode: sync
+  token: replaceme
+  url: http://192.168.4.46:32400
+tmdb:
+  apikey: replaceme
+  language: en

@@ -1,0 +1,93 @@
+---
+collections:
+  3 Ninjas:
+    poster: https://www.themoviedb.org/t/p/original/kTRDNxSlNSE7n9cF9W2xx9frs3d.jpg
+    tmdb_collection: 71458
+    tmdb_summary: 71458
+  48 Hrs:
+    background: https://www.themoviedb.org/t/p/original/8c3dCZlz4l8IkqM2GGRLbUMpIEo.jpg
+    poster: https://www.themoviedb.org/t/p/original/o7v8aKfHWdey2JL6cuCy6NQVcIX.jpg
+    tmdb_collection: 93295
+    tmdb_summary: 93295
+  Alice in Wonderland:
+    background: https://www.themoviedb.org/t/p/original/mRztlAJ2fe67h6m6UgqVv6zCMmk.jpg
+    poster: https://www.themoviedb.org/t/p/original/6H5d0Dx6Pq3jZUOjzJQsKlloWII.jpg
+    tmdb_collection: 261307
+    tmdb_summary: 261307
+  American Pie:
+    background: https://www.themoviedb.org/t/p/original/cshrhPYDGfyZz2EcN0HgFklaKdB.jpg
+    poster: https://www.themoviedb.org/t/p/original/cNqNmezA9iSeJcPdzMqjfXldV9F.jpg
+    tmdb_collection: 2806
+    tmdb_summary: 2806
+  Ant-Man:
+    background: https://www.themoviedb.org/t/p/original/2KjtWUBiksmN8LsUouaZnxocu5N.jpg
+    poster: https://www.themoviedb.org/t/p/original/fixDhEstFF5FfB4IPUCuGlgAp5J.jpg
+    tmdb_collection: 422834
+    tmdb_summary: 422834
+  Aquaman:
+    background: https://www.themoviedb.org/t/p/original/5iidzov8DrsSyZdefeo7jBLDNUW.jpg
+    poster: https://www.themoviedb.org/t/p/original/611A2SfU4ZWlLcZZJbQUkah9Z6n.jpg
+    tmdb_collection: 573693
+    tmdb_summary: 573693
+  Arthur and the Invisibles:
+    background: https://www.themoviedb.org/t/p/original/thlPz3RDvOkoXHLiG2aZ2xbgRhf.jpg
+    poster: https://www.themoviedb.org/t/p/original/x4r77LrhEPg1QZ96uAVEq3bEonB.jpg
+    tmdb_collection: 85817
+    tmdb_summary: 85817
+  Atlantis:
+    background: https://www.themoviedb.org/t/p/original/iBdQ0EL08ANYUgErXICkuzV9UcC.jpg
+    poster: https://www.themoviedb.org/t/p/original/oxwbFidNYkOLvxIJFIJjzCl9Ns8.jpg
+    tmdb_collection: 100965
+    tmdb_summary: 100965
+  Avengers:
+    background: https://www.themoviedb.org/t/p/original/yABPtsjom74BdRR73AhyoDErrL0.jpg
+    poster: https://www.themoviedb.org/t/p/original/5LkXlUPrRuhMAeVugr1xXcsZbV8.jpg
+    tmdb_collection: 86311
+    tmdb_summary: 86311
+  Fast & Furious:
+    background: https://www.themoviedb.org/t/p/original/mZIFtg3qa1V3mufSrOhDDicNEB8.jpg
+    poster: https://www.themoviedb.org/t/p/original/yBxdSc9noWHBdhSDlx8KsA1WYhi.jpg
+    tmdb_collection: 9485
+    tmdb_summary: 9485
+  Harry Potter:
+    background: https://www.themoviedb.org/t/p/original/4gV0rKUjB1nLUdZB4zIltLvNZZr.jpg
+    poster: https://www.themoviedb.org/t/p/original/6P2DrYGCv43DBXYQ7lgnG2e9eW4.jpg
+    tmdb_collection: 1241
+    tmdb_summary: 1241
+  Jump Street:
+    background: https://www.themoviedb.org/t/p/original/3fkhNqG2i6dlWZmjg100PFEpbWW.jpg
+    poster: https://www.themoviedb.org/t/p/original/n2YH0R0TK5g5APvWwBhhdGDR6BM.jpg
+    tmdb_collection: 212562
+    tmdb_summary: 212562
+  Jurassic Park:
+    background: https://www.themoviedb.org/t/p/original/njFixYzIxX8jsn6KMSEtAzi4avi.jpg
+    poster: https://i.imgur.com/QMjbyCX.png
+    tmdb_collection: 328
+    tmdb_summary: 328
+  Lethal Weapon:
+    background: https://www.themoviedb.org/t/p/original/mLr04TEPPmBUfbAmHvXUeOXZkJy.jpg
+    poster: https://www.themoviedb.org/t/p/original/uaWFEomqS66rUo4BFACxPyBQPYr.jpg
+    tmdb_collection: 945
+    tmdb_summary: 945
+  Teenage Mutant Ninja Turtles:
+    background: https://www.themoviedb.org/t/p/original/7dusELv6x1ANRGorNvqbKhKIUPY.jpg
+    poster: https://www.themoviedb.org/t/p/original/hxcTQ9aR9U2hOWyy7S1HoBDFprA.jpg
+    tmdb_collection: 1582
+    tmdb_summary: 1582
+plex:
+  library: Movies
+  library_type: movie
+  sync_mode: sync
+  token: replaceme
+  url: http://192.168.4.46:32400
+radarr:
+  add_to_radarr: true
+  quality_profile_id: 5
+  root_folder_path: /data/8d19a07a-03d5-45f1-85dc-ccd49430f386/data/media/Movies
+  search_movie: false
+  token: replaceme
+  url: http://192.168.4.46:7878
+  version: v3
+tmdb:
+  apikey: replaceme
+  language: en
