@@ -39,3 +39,4 @@ docker-configs/homer/assets/custom.css.sample
 docker-configs/homer/assets/manifest.json
 docker-configs/traefik/acme.json
 docker-configs/traefik/traefik.log
+docker-configs/plex-auto-collections/db/config-movie_guid.db
