@@ -38,3 +38,5 @@ docker-configs/homer/assets/manifest.json
 docker-configs/plex-auto-collections/db/config-movie_guid.db
 docker-configs/traefik/traefik.log
 docker-configs/traefik/acme.json
+docker-configs/plex-meta-manager/config.cache
+docker-configs/plex-meta-manager/logs/meta.log
