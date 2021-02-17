@@ -1,0 +1,77 @@
+---
+collections:
+  3 Ninjas:
+    collection_order: release
+    url_background: null
+    tmdb_collection_details: 71458
+    url_poster: https://www.themoviedb.org/t/p/original/kTRDNxSlNSE7n9cF9W2xx9frs3d.jpg
+  48 Hrs:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/8c3dCZlz4l8IkqM2GGRLbUMpIEo.jpg
+    tmdb_collection_details: 93295
+    url_poster: https://www.themoviedb.org/t/p/original/o7v8aKfHWdey2JL6cuCy6NQVcIX.jpg
+  Alice in Wonderland:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/mRztlAJ2fe67h6m6UgqVv6zCMmk.jpg
+    tmdb_collection_details: 261307
+    url_poster: https://www.themoviedb.org/t/p/original/6H5d0Dx6Pq3jZUOjzJQsKlloWII.jpg
+  American Pie:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/cshrhPYDGfyZz2EcN0HgFklaKdB.jpg
+    tmdb_collection_details: 2806
+    url_poster: https://www.themoviedb.org/t/p/original/cNqNmezA9iSeJcPdzMqjfXldV9F.jpg
+  Ant-Man:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/2KjtWUBiksmN8LsUouaZnxocu5N.jpg
+    tmdb_collection_details: 422834
+    url_poster: https://www.themoviedb.org/t/p/original/fixDhEstFF5FfB4IPUCuGlgAp5J.jpg
+  Aquaman:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/5iidzov8DrsSyZdefeo7jBLDNUW.jpg
+    tmdb_collection_details: 573693
+    url_poster: https://www.themoviedb.org/t/p/original/611A2SfU4ZWlLcZZJbQUkah9Z6n.jpg
+  Arthur and the Invisibles:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/thlPz3RDvOkoXHLiG2aZ2xbgRhf.jpg
+    tmdb_collection_details: 85817
+    url_poster: https://www.themoviedb.org/t/p/original/x4r77LrhEPg1QZ96uAVEq3bEonB.jpg
+  Atlantis:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/iBdQ0EL08ANYUgErXICkuzV9UcC.jpg
+    tmdb_collection_details: 100965
+    url_poster: https://www.themoviedb.org/t/p/original/oxwbFidNYkOLvxIJFIJjzCl9Ns8.jpg
+  Avengers:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/yABPtsjom74BdRR73AhyoDErrL0.jpg
+    tmdb_collection_details: 86311
+    url_poster: https://www.themoviedb.org/t/p/original/5LkXlUPrRuhMAeVugr1xXcsZbV8.jpg
+  Fast & Furious:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/mZIFtg3qa1V3mufSrOhDDicNEB8.jpg
+    tmdb_collection_details: 9485
+    url_poster: https://www.themoviedb.org/t/p/original/yBxdSc9noWHBdhSDlx8KsA1WYhi.jpg
+  Harry Potter:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/4gV0rKUjB1nLUdZB4zIltLvNZZr.jpg
+    tmdb_collection_details: 1241
+    url_poster: https://www.themoviedb.org/t/p/original/6P2DrYGCv43DBXYQ7lgnG2e9eW4.jpg
+  Jump Street:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/3fkhNqG2i6dlWZmjg100PFEpbWW.jpg
+    tmdb_collection_details: 212562
+    url_poster: https://www.themoviedb.org/t/p/original/n2YH0R0TK5g5APvWwBhhdGDR6BM.jpg
+  Jurassic Park:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/njFixYzIxX8jsn6KMSEtAzi4avi.jpg
+    tmdb_collection_details: 328
+    url_poster: https://i.imgur.com/QMjbyCX.png
+  Lethal Weapon:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/mLr04TEPPmBUfbAmHvXUeOXZkJy.jpg
+    tmdb_collection_details: 945
+    url_poster: https://www.themoviedb.org/t/p/original/uaWFEomqS66rUo4BFACxPyBQPYr.jpg
+  Teenage Mutant Ninja Turtles:
+    collection_order: release
+    url_background: https://www.themoviedb.org/t/p/original/7dusELv6x1ANRGorNvqbKhKIUPY.jpg
+    tmdb_collection_details: 1582
+    url_poster: https://www.themoviedb.org/t/p/original/hxcTQ9aR9U2hOWyy7S1HoBDFprA.jpg

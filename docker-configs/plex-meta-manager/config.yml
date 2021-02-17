@@ -1,0 +1,27 @@
+---
+cache:
+  cache: true
+  cache_expiration: 60
+libraries:
+  Movies:
+    library_type: movie
+  TV Shows:
+    library_type: show
+plex:
+  asset_directory: ./assets
+  show_filtered: false
+  show_unmanaged: true
+  sync_mode: sync
+  token: <REPLACEME>
+  url: http://192.168.4.46:32400
+radarr:
+  add: true
+  quality_profile: 1080p-bluray
+  root_folder_path: /data/8d19a07a-03d5-45f1-85dc-ccd49430f386/data/media/Movies
+  search: false
+  token: <REPLACEME>
+  url: http://192.168.4.46:7878
+  version: v3
+tmdb:
+  apikey: <REPLACEME>
+  language: en
