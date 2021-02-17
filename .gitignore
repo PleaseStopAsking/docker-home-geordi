@@ -7,8 +7,6 @@ docker-configs/radarr/config
 docker-configs/sonarr/config
 docker-configs/transmission/config
 docker-configs/duplicati/config
-docker-configs/traefik/acme.json
-docker-configs/traefik/traefik.log
 docker-configs/jackett/config
 docker-configs/lazylibrarian/config
 docker-configs/prometheus/config
@@ -37,6 +35,6 @@ docker-configs/homer/assets/config.yml.dist
 docker-configs/homer/assets/config.yml.dist.sample-sui
 docker-configs/homer/assets/custom.css.sample
 docker-configs/homer/assets/manifest.json
-docker-configs/traefik/acme.json
-docker-configs/traefik/traefik.log
 docker-configs/plex-auto-collections/db/config-movie_guid.db
+docker-configs/traefik/traefik.log
+docker-configs/traefik/acme.json
