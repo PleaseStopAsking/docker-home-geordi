@@ -205,6 +205,11 @@ collections:
     tmdb_collection_details: 386382
     url_background: https://www.themoviedb.org/t/p/original/6QonAoIN0jhWZZWZGJswSxHzUnU.jpg
     url_poster: https://www.themoviedb.org/t/p/original/dwdyvzFX9NEI7oFlRnZurRmlswQ.jpg
+  Ghostbusters:
+    collection_order: release
+    tmdb_collection_details: 2980
+    url_background: https://www.themoviedb.org/t/p/original/6Jnlhr2ac8OuDJEowsFLzZY3SXd.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/sctvCtE1M1rDF4f0W2fMrk2BrGB.jpg
   Gremlins:
     collection_order: release
     tmdb_collection_details: 89151

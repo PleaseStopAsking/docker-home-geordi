@@ -11,4 +11,4 @@ find /example/path -name "*.txt" -delete
 find /example/path -type f -name "*.MP4" -exec rename 's/\.MP4$/.mp4/' '{}' \;
 
 # Run plex-meta-manager one time
-docker run --rm -it -v /root/docker-home-geordi/docker-configs/plex-meta-manager:/config:rw meisnate12/plex-meta-manager --c /config/config.yml --run
+docker run --rm -it -v /root/docker-home-geordi/docker-configs/plex-meta-manager:/config:rw meisnate12/plex-meta-manager --config /config/config.yml --run

@@ -1,19 +1,25 @@
----
-cache:
-  cache: true
-  cache_expiration: 60
 libraries:
   Movies:
     library_type: movie
   TV Shows:
     library_type: show
-plex:
+settings:
+  save_missing: false
+  show_missing: false
+  cache: true
+  cache_expiration: 60
   asset_directory: ./assets
-  show_filtered: false
-  show_unmanaged: true
   sync_mode: sync
+  show_unmanaged: true
+  show_filtered: false
+  run_again_delay: 0
+plex:
   token: <REPLACEME>
   url: http://192.168.4.46:32400
+  timeout: 60
+tmdb:
+  apikey: <REPLACEME>
+  language: en
 radarr:
   add: true
   quality_profile: 1080p-bluray
@@ -22,6 +28,4 @@ radarr:
   token: <REPLACEME>
   url: http://192.168.4.46:7878
   version: v3
-tmdb:
-  apikey: <REPLACEME>
-  language: en
+  tag:
