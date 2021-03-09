@@ -3,7 +3,6 @@ collections:
   3 Ninjas:
     collection_order: release
     tmdb_collection_details: 71458
-    url_background: null
     url_poster: https://www.themoviedb.org/t/p/original/kTRDNxSlNSE7n9cF9W2xx9frs3d.jpg
   48 Hrs:
     collection_order: release
@@ -240,11 +239,36 @@ collections:
     tmdb_collection_details: 72119
     url_background: https://www.themoviedb.org/t/p/original/sfT3NqSnjEDY1449qBgQRWOIcaq.jpg
     url_poster: https://www.themoviedb.org/t/p/original/xxIwqQARS0RZu5cIENahqZSRw2a.jpg
+  Horrible Bosses:
+    collection_order: release
+    tmdb_collection_details: 280588
+    url_background: https://www.themoviedb.org/t/p/original/kGvdIEuzy0rHnbIJ0qmnIjRGSKW.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/zU3dVVBa3JW1nQVUsaFM0BeTnK.jpg
   Hot Shots!:
     collection_order: release
     tmdb_collection_details: 52988
     url_background: https://www.themoviedb.org/t/p/original/iGrRouADMV9MbidImsgRORaV3q.jpg
     url_poster: https://www.themoviedb.org/t/p/original/3cuLply9uaWZBvS80IzPWgg16t9.jpg
+  Hot Tub Time Machine:
+    collection_order: release
+    tmdb_collection_details: 313576
+    url_background: https://www.themoviedb.org/t/p/original/noeTVcgpBiD48fDjFVic1Vz7ope.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/iEhb00TGPucF0b4joM1ieyY026U.jpg
+  Hotel Transylvania:
+    collection_order: release
+    tmdb_collection_details: 185103
+    url_background: https://www.themoviedb.org/t/p/original/5MJt6g7k9gADQH4xHn5mOEMa3Vr.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/9nR1xIcDo84gbbNZeFb9NCZYTdw.jpg
+  How to Train Your Dragon:
+    collection_order: release
+    tmdb_collection_details: 89137
+    url_background: https://www.themoviedb.org/t/p/original/c5KPeExA6f6LX9xHycLsZGljsRm.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/268eZwmFTScTdWlLIQl0ojewOBV.jpg
+  Ice Age:
+    collection_order: release
+    tmdb_collection_details: 8354
+    url_background: https://www.themoviedb.org/t/p/original/ovWkSikbJUMwwmUdD6WTa1bbFrh.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/stQoHvo0q6ZcEkji2Z1wlAxKnDq.jpg
   Indiana Jones:
     collection_order: release
     tmdb_collection_details: 84
@@ -255,6 +279,11 @@ collections:
     tmdb_collection_details: 131292
     url_background: https://www.themoviedb.org/t/p/original/tFGLPLyANPN8nDN2u0hZ4nyAcFN.jpg
     url_poster: https://www.themoviedb.org/t/p/original/fbeJ7f0aD4A112Bc1tnpzyn82xO.jpg
+  Jumanji:
+    collection_order: release
+    tmdb_collection_details: 495527
+    url_background: https://www.themoviedb.org/t/p/original/9PCsWrw1GvrZkrd1GCxRqscgZu0.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/oGQYrsC3t30ovgkBNlncbdBmkaP.jpg
   Jump Street:
     collection_order: release
     tmdb_collection_details: 212562
@@ -265,11 +294,31 @@ collections:
     tmdb_collection_details: 328
     url_background: https://www.themoviedb.org/t/p/original/njFixYzIxX8jsn6KMSEtAzi4avi.jpg
     url_poster: https://i.imgur.com/QMjbyCX.png
+  Kick-Ass:
+    collection_order: release
+    tmdb_collection_details: 179892
+    url_background: https://www.themoviedb.org/t/p/original/kelR7BTeIP2ENVjmSz76lD3r5Ht.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/2UzHizIS6Z87ocDdY4TALPj1EqD.jpg
+  Kung Fu Panda:
+    collection_order: release
+    tmdb_collection_details: 77816
+    url_background: https://www.themoviedb.org/t/p/original/uDosHOFFWtF5YteBRygHALFqLw2.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/7X73TVXQhHF6bZYaj557GePr5nu.jpg
   Lethal Weapon:
     collection_order: release
     tmdb_collection_details: 945
     url_background: https://www.themoviedb.org/t/p/original/mLr04TEPPmBUfbAmHvXUeOXZkJy.jpg
     url_poster: https://www.themoviedb.org/t/p/original/uaWFEomqS66rUo4BFACxPyBQPYr.jpg
+  Lilo & Stitch:
+    collection_order: release
+    tmdb_collection_details: 97461
+    url_background: https://www.themoviedb.org/t/p/original/fmQpyiY2g2muOOLXQ0S0mTPij8I.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/bstyyXaLinnYwoyvo5HaDceJN07.jpg
+  Madagascar:
+    collection_order: release
+    tmdb_collection_details: 14740
+    url_background: https://www.themoviedb.org/t/p/original/lzTIAbvMeGWB7PUrmBZXulGA28M.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/UXIxsUbwMpv4v8xXRdT7LX58z9.jpg
   Men in Black:
     collection_order: release
     tmdb_collection_details: 86055
@@ -311,7 +360,7 @@ collections:
     url_background: https://www.themoviedb.org/t/p/original/gWl5pN2FplE709aVtA4lakwsE6t.jpg
     url_poster: https://www.themoviedb.org/t/p/original/w2IVqa43Ge49mrY3qSaJWpyDtz6.jpg
   Star Wars:
-    collection_order: release
+    collection_order: alpha
     tmdb_collection_details: 10
     url_background: https://www.themoviedb.org/t/p/original/bMPfIfBZOUv7c357J8HliYJfpca.jpg
     url_poster: https://www.themoviedb.org/t/p/original/pWVLFh4OuejTpUaDQbB1C4zoS2p.jpg
@@ -365,11 +414,31 @@ collections:
     tmdb_collection_details: 100970
     url_background: https://www.themoviedb.org/t/p/original/rtGHWe3rr3FgWNKA5eXqemr6mzo.jpg
     url_poster: https://www.themoviedb.org/t/p/original/ph2KiQxp8xmgA5ENoBhETvJnYw9.jpg
+  The Incredibles:
+    collection_order: release
+    tmdb_collection_details: 468222
+    url_background: https://www.themoviedb.org/t/p/original/6oi6V1O9MJRNnfV8E9JMntmFqBD.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/xMX1jZyObVeWUxDQmt53X6jzIO4.jpg
+  The Lego Movie:
+    collection_order: release
+    tmdb_collection_details: 325470
+    url_background: https://www.themoviedb.org/t/p/original/1k75UOVwioSC9BtG2Co3EJw70w9.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/qwuwukEjuh6Zs51NnhtPVriARey.jpg
+  The Lion King:
+    collection_order: release
+    tmdb_collection_details: 94032
+    url_background: null
+    url_poster: https://www.themoviedb.org/t/p/original/y3n3SDoRDqgz3LLWuvcfi3ZiF84.jpg
   The Mighty Ducks:
     collection_order: release
     tmdb_collection_details: 10709
     url_background: https://www.themoviedb.org/t/p/original/6ADjNCLGiXxomCeRKCPOKDVNNGS.jpg
     url_poster: https://www.themoviedb.org/t/p/original/892AHBml1Mazpgk7D8qHNlYZpry.jpg
+  The Mummy:
+    collection_order: release
+    tmdb_collection_details: 1733
+    url_background: null
+    url_poster: https://www.themoviedb.org/t/p/original/x5ZQsM90h4jmvDelgbCwPjcOn1s.jpg
   The Rescuers:
     collection_order: release
     tmdb_collection_details: 57971
