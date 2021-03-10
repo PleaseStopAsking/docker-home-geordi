@@ -319,11 +319,21 @@ collections:
     tmdb_collection_details: 14740
     url_background: https://www.themoviedb.org/t/p/original/lzTIAbvMeGWB7PUrmBZXulGA28M.jpg
     url_poster: https://www.themoviedb.org/t/p/original/UXIxsUbwMpv4v8xXRdT7LX58z9.jpg
+  Maleficent:
+    collection_order: release
+    tmdb_collection_details: 531331
+    url_background: https://www.themoviedb.org/t/p/original/lTwaU142KVz4wFPjuGq0OKVjl7P.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/gndSe2jgqkv55dAaBG19H7XabRx.jpg
   Men in Black:
     collection_order: release
     tmdb_collection_details: 86055
     url_background: https://www.themoviedb.org/t/p/original/mJ2PbY8kHKCLdNPjv8zTQgilHPA.jpg
     url_poster: https://www.themoviedb.org/t/p/original/t0jf0sH9KkBbCS6vuoFUyGo0BQq.jpg
+  Mulan:
+    collection_order: release
+    tmdb_collection_details: 87236
+    url_background: https://www.themoviedb.org/t/p/original/uzQqTJMTCcAbXCg3LUsiA8cJ5m0.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/6Kjizag3KnUNDaBkN9LZKfnlBxY.jpg
   National Lampoon's Vacation:
     collection_order: release
     tmdb_collection_details: 108693
