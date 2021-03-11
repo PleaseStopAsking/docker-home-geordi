@@ -229,6 +229,11 @@ collections:
     tmdb_collection_details: 1241
     url_background: https://www.themoviedb.org/t/p/original/4gV0rKUjB1nLUdZB4zIltLvNZZr.jpg
     url_poster: https://www.themoviedb.org/t/p/original/6P2DrYGCv43DBXYQ7lgnG2e9eW4.jpg
+  Has Fallen:
+    collection_order: release
+    tmdb_collection_details: 386534
+    url_background: https://www.themoviedb.org/t/p/original/kLGF2qFYVuETxMtHZJgaSGmXK1c.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/ytjnoWBRU0ZUR2EiuyAJn7rAaaM.jpg
   Home Alone:
     collection_order: release
     tmdb_collection_details: 9888
@@ -274,6 +279,10 @@ collections:
     tmdb_collection_details: 84
     url_background: https://www.themoviedb.org/t/p/original/6kh59mZizZsttZPR0HAdXk6Ve2n.jpg
     url_poster: https://www.themoviedb.org/t/p/original/lpxDrACKJhbbGOlwVMNz5YCj6SI.jpg
+  Insanity MAX:30:
+    tmdb_list_details: 7081652
+    url_background: https://www.themoviedb.org/t/p/original/rUcFNAwnTFiKtijDlDp8Ukgz48j.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/fTU62x07HQiA2e7PTKzrXBAOyEu.jpg
   Iron Man:
     collection_order: release
     tmdb_collection_details: 131292
@@ -329,6 +338,11 @@ collections:
     tmdb_collection_details: 86055
     url_background: https://www.themoviedb.org/t/p/original/mJ2PbY8kHKCLdNPjv8zTQgilHPA.jpg
     url_poster: https://www.themoviedb.org/t/p/original/t0jf0sH9KkBbCS6vuoFUyGo0BQq.jpg
+  Monsters, Inc:
+    collection_order: release
+    tmdb_collection_details: 137696
+    url_background: https://www.themoviedb.org/t/p/original/x4Mq7gDRhbqDjw4SkemLvd1yzF3.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/8xHtCUKfre8b4tkpUWU1y67Cnqr.jpg
   Mulan:
     collection_order: release
     tmdb_collection_details: 87236
@@ -339,6 +353,35 @@ collections:
     tmdb_collection_details: 108693
     url_background: https://www.themoviedb.org/t/p/original/gwKsTIUgBRtTd4M2m5EKuTQrYaf.jpg
     url_poster: https://www.themoviedb.org/t/p/original/z2VLV2DeK38VerYNvKcrcVfP8sc.jpg
+  National Treasure:
+    collection_order: release
+    tmdb_collection_details: 52984
+    url_background: https://www.themoviedb.org/t/p/original/a0GLVfaDSf5GNZKK5H4FgGCD2VW.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/z5EIRaI8XS0brelYwDFEVlxcpzM.jpg
+  Neighbors:
+    collection_order: release
+    tmdb_collection_details: 400700
+    url_background: https://www.themoviedb.org/t/p/original/4ojPx8aEw2uEZuQT50IRrcGlIAU.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/iBPR2I6kByq7ZwBnwXVrYOHRj4U.jpg
+  Night at the Museum:
+    collection_order: release
+    tmdb_collection_details: 85943
+    url_background: https://www.themoviedb.org/t/p/original/z0nqqHwEY3niKa41kKbR4zhnvHw.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/q2nwE0Qi8U6tsU5HDmiWS2D3dSJ.jpg
+  Ocean's:
+    collection_order: release
+    tmdb_collection_details: 304
+    url_background: https://www.themoviedb.org/t/p/original/7WUSrq8DqSkVgv1vmhBvav5bPoB.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/A0AXiF3dyQ45FIsjHycJ4prAosg.jpg
+  P90X2:
+    tmdb_list_details: 7081655
+    url_background: https://www.themoviedb.org/t/p/original/1fXvJbuL46hU7q7y9XAQq0a3pEj.jpg
+    url_poster: https://m.media-amazon.com/images/M/MV5BYTA1ZDI5NTEtNmY1MS00NDNiLWEwMmUtYzZhOGNiMTM4NWNkXkEyXkFqcGdeQXVyNjA4MDcyNDc@._V1_.jpg
+  Paddington:
+    collection_order: release
+    tmdb_collection_details: 488924
+    url_background: https://www.themoviedb.org/t/p/original/yef85T1JEJJkqUQ55d88MypRK90.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/zvMcT9kPOj5sqY7r1XQRjcey1o6.jpg
   Phineas & Ferb:
     collection_order: release
     tmdb_collection_details: 715146
@@ -449,6 +492,11 @@ collections:
     tmdb_collection_details: 1733
     url_background: null
     url_poster: https://www.themoviedb.org/t/p/original/x5ZQsM90h4jmvDelgbCwPjcOn1s.jpg
+  The Nutty Professor:
+    collection_order: release
+    tmdb_collection_details: 86028
+    url_background: https://www.themoviedb.org/t/p/original/mW1NQFOSCwwgk03SpcpwiQEL2Lo.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/a6zC38ID7EyAflo8tsPDP4IE0Mt.jpg
   The Rescuers:
     collection_order: release
     tmdb_collection_details: 57971
