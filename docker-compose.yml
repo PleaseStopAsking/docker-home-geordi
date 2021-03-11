@@ -96,7 +96,7 @@ services:
       - transmission
 
   sonarr:
-    image: linuxserver/sonarr:preview
+    image: linuxserver/sonarr:latest
     container_name: sonarr
     hostname: sonarr
     restart: unless-stopped
