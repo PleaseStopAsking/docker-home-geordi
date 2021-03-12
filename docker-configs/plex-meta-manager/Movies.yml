@@ -387,6 +387,11 @@ collections:
     tmdb_collection_details: 715146
     url_background: https://www.themoviedb.org/t/p/original/su1d5QvS7ZfHRh1pGGDSQWfHcnJ.jpg
     url_poster: https://www.themoviedb.org/t/p/original/aN18keia17xrIXHpvlUWUziFnLy.jpg
+  Pirates of the Caribbean:
+    collection_order: release
+    tmdb_collection_details: 295
+    url_background: https://www.themoviedb.org/t/p/original/8Jg0Z5kOoPQRHBNiQs1s9hMT1qt.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/HpjK1VFjltCGeCzCTG2xIvaWlk.jpg
   Planet of the Apes (Reboot):
     collection_order: release
     tmdb_collection_details: 173710
