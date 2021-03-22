@@ -432,6 +432,16 @@ collections:
     tmdb_collection_details: 115575
     url_background: https://www.themoviedb.org/t/p/original/gWl5pN2FplE709aVtA4lakwsE6t.jpg
     url_poster: https://www.themoviedb.org/t/p/original/w2IVqa43Ge49mrY3qSaJWpyDtz6.jpg
+  Star Trek (The Next Generation):
+    collection_order: release
+    tmdb_collection_details: 115570
+    url_background: https://www.themoviedb.org/t/p/original/xb6wgQzRLWoZSDk06esOMc9PbwU.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/jYtNUfMbU6DBbmd4LUS19u4hF4p.jpg
+  Star Trek (The Original Series):
+    collection_order: release
+    tmdb_collection_details: 151
+    url_background: https://www.themoviedb.org/t/p/original/qM8q2gWAeQF0XUpZ4XZc4CMX87a.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/vNrbrsHOpXS3whk9DLuBNcjJy1s.jpg
   Star Wars:
     collection_order: alpha
     tmdb_collection_details: 10
