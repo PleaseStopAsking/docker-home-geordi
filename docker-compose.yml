@@ -194,10 +194,10 @@ services:
       - "traefik.http.routers.plex.tls.certresolver=letsencrypt"
       - "traefik.http.routers.plex.middlewares=plex-secureheaders,plex-ratelimit"
       # Middleware
-      #- "traefik.http.middlewares.plex-secureheaders.headers.accessControlAllowOriginList=https://plex.${traefik_duckdns_domain}" TODO - Does not seem to add the header as expected. Using customResponseHeader below for this!
       - "traefik.http.middlewares.plex-secureheaders.headers.accessControlAllowMethods=GET, OPTIONS, PUT"
       - "traefik.http.middlewares.plex-secureheaders.headers.accessControlMaxAge=100"
       - "traefik.http.middlewares.plex-secureheaders.headers.addVaryHeader=true"
+      - "traefik.http.middlewares.plex-secureheaders.headers.accesscontrolalloworiginlist=https://plex.${traefik_duckdns_domain}"
       - "traefik.http.middlewares.plex-secureheaders.headers.hostsProxyHeaders=X-Forwarded-Host"
       - "traefik.http.middlewares.plex-secureheaders.headers.sslRedirect=true"
       - "traefik.http.middlewares.plex-secureheaders.headers.sslForceHost=true"
@@ -213,7 +213,8 @@ services:
       - "traefik.http.middlewares.plex-secureheaders.headers.contentSecurityPolicy=default-src 'none'; base-uri 'self'; script-src 'self' 'sha256-4yWHSc589xcanc7GAAy3++M4EvUxNtUsJySeoYEE6z8=' 'sha256-9YWnVu29Ew4LEW4tEiPWEdcHvzlbbwpiazu4PZR3oTY='; style-src 'self'; img-src 'self' https://provider-static.plex.tv data: blob:; font-src 'self' data:; connect-src 'self' https://plex.tv https://*.plex.direct:* wss://*.plex.direct:* wss://pubsub.plex.tv; media-src 'self' https://*.plex.direct:*; object-src 'self'; child-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; referrer no-referrer"
       - "traefik.http.middlewares.plex-secureheaders.headers.featurePolicy=camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
       - "traefik.http.middlewares.plex-secureheaders.headers.customResponseHeaders.X-Robots-Tag=none,noarchive,nosnippet,notranslate,noimageindex"
-      - "traefik.http.middlewares.plex-secureheaders.headers.customResponseHeaders.Access-Control-Allow-Origin=https://plex.${traefik_duckdns_domain}"
+      #- "traefik.http.middlewares.plex-secureheaders.headers.customResponseHeaders.Permissions-Policy=camera=(), geolocation=(), microphone=(), payment=(), usb=(), vr=()"
+      #- "traefik.http.middlewares.plex-secureheaders.headers.customResponseHeaders.Access-Control-Allow-Origin=https://plex.${traefik_duckdns_domain}"
       #- "traefik.http.middlewares.plex-secureheaders.headers.allowedHosts=plex.${traefik_duckdns_domain}" TODO - Plex app never loads data!
       #- "traefik.http.middlewares.plex-secureheaders.headers.sslHost=plex.${traefik_duckdns_domain}" # TODO - Allows Plex app to load data but nothing plays!
       - "traefik.http.middlewares.plex-ratelimit.ratelimit.average=100"
@@ -308,7 +309,7 @@ services:
       - ${data_folder_path}:/srv:ro
 
   traefik:
-    image: traefik:v2.3
+    image: traefik:v2.4
     container_name: traefik
     hostname: traefik
     restart: always
