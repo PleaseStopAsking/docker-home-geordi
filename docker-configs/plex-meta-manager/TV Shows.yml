@@ -173,7 +173,7 @@ collections:
   Paramount+:
     collection_order: alpha
     file_background: null
-    file_poster: null
+    file_poster: /config/assets/Paramount Network.jpg
     tmdb_network: 4330
   SYFY:
     collection_order: alpha
