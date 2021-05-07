@@ -7,7 +7,7 @@ settings:
   save_missing: false
   show_missing: false
   cache: true
-  cache_expiration: 60
+  cache_expiration: 90
   asset_directory: ./assets
   sync_mode: sync
   show_unmanaged: true
