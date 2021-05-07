@@ -23,12 +23,18 @@ scrape_configs:
       - targets: ["node-exporter:9100"]
         labels:
           instance: "geordi"
+      - targets: ["192.168.4.71:9100"]
+        labels:
+          instance: "worf"
 
   - job_name: "cadvisor"
     static_configs:
-      - targets: ["cadvisor:8081"]
+      - targets: ["cadvisor:8080"]
         labels:
           instance: "geordi"
+      - targets: ["192.168.4.71:8080"]
+        labels:
+          instance: "worf"
 
   #- job_name: "traefik"
   #  static_configs:
