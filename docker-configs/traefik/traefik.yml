@@ -14,12 +14,12 @@ entryPoints:
           permanent: true
   https:
     address: ":443"
-  #metrics:
-  #  address: ":8082"
+  metrics:
+    address: ":8441"
 
 #Enable dashboard
-#api:
-#  dashboard: true
+api:
+  dashboard: true
 #  insecure: true
 
 #Dynamic configuration will come from docker labels
@@ -47,13 +47,13 @@ accessLog:
   filePath: /traefik.log
   bufferingSize: 100
 
-#metrics:
-#  prometheus:
-#    entryPoint: metrics
-#    buckets:
-#      - 0.1
-#      - 0.3
-#      - 1.2
-#      - 5.0
-#    addEntryPointsLabels: true
-#    addServicesLabels: true
+metrics:
+  prometheus:
+    entryPoint: metrics
+    buckets:
+      - 0.1
+      - 0.3
+      - 1.2
+      - 5.0
+    addEntryPointsLabels: true
+    addServicesLabels: true

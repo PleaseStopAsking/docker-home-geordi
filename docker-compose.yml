@@ -314,8 +314,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      #- "8080:8080"
-      #- "8082:8082"
+      - "8441:8441"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./docker-configs/traefik/acme.json:/acme.json
@@ -326,4 +325,6 @@ services:
       - DUCKDNS_TOKEN=${traefik_duckdns_token}
     labels:
       - "traefik.enable=true"
-      #- "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.metrics.service=api@internal"
+      - "traefik.http.routers.metrics.entrypoints=metrics"
+      - "traefik.http.routers.metrics.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)"

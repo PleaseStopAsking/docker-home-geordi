@@ -36,11 +36,11 @@ scrape_configs:
         labels:
           instance: "worf"
 
-  #- job_name: "traefik"
-  #  static_configs:
-  #    - targets: ["traefik:8082"]
-  #      labels:
-  #        instance: "geordi"
+  - job_name: "traefik"
+    static_configs:
+      - targets: ["traefik:8441"]
+        labels:
+          instance: "geordi"
 
   - job_name: "pihole"
     static_configs:
