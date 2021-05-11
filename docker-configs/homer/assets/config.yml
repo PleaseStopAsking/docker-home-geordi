@@ -105,7 +105,7 @@ services:
       - name: "Traefik"
         logo: "assets/icons/traefik.png"
         subtitle: "Edge Routing"
-        url: "http://192.168.4.46:8080/dashboard/"
+        url: "http://192.168.4.46:8441/dashboard/"
   - name: "Storage"
     icon: "fas fa-database"
     items:
