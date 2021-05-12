@@ -42,3 +42,4 @@ docker-configs/plex-meta-manager/config.cache
 docker-configs/plex-meta-manager/logs
 docker-configs/plex-meta-manager/Movies_missing.yml
 docker-configs/plex-meta-manager/TV Shows_missing.yml
+docker-configs/diun/diun.db
