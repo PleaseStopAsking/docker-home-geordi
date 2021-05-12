@@ -65,17 +65,19 @@ services:
       options:
         max-size: 10m
 
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    hostname: watchtower
+  diun:
+    image: crazymax/diun:4.16.1
+    container_name: diun
+    hostname: diun
     restart: always
     volumes:
+      - ./docker-configs/diun/diun.yml:/diun.yml:ro
+      - ./docker-configs/diun/:/data
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - TZ=${timezone}
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_POLL_INTERVAL=43200
+      - LOG_LEVEL=info
+      - LOG_JSON=false
 
   jackett:
     image: linuxserver/jackett
