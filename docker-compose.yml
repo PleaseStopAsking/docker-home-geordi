@@ -2,7 +2,7 @@ version: "3"
 
 services:
   node-exporter:
-    image: prom/node-exporter
+    image: prom/node-exporter:v1.1.2
     container_name: node-exporter
     hostname: node-exporter
     restart: unless-stopped
@@ -25,7 +25,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
 
   transmission:
-    image: haugene/transmission-openvpn
+    image: haugene/transmission-openvpn:3.6
     container_name: transmission
     hostname: transmission
     restart: unless-stopped
@@ -80,7 +80,7 @@ services:
       - LOG_JSON=false
 
   jackett:
-    image: linuxserver/jackett
+    image: linuxserver/jackett:v0.18.31-ls31
     container_name: jackett
     hostname: jackett
     restart: unless-stopped
@@ -96,7 +96,7 @@ services:
       - transmission
 
   sonarr:
-    image: linuxserver/sonarr:latest
+    image: linuxserver/sonarr:3.0.6.1196-ls104
     container_name: sonarr
     hostname: sonarr
     restart: unless-stopped
@@ -113,7 +113,7 @@ services:
       - transmission
 
   radarr:
-    image: linuxserver/radarr
+    image: linuxserver/radarr:3.1.1.4954-ls104
     container_name: radarr
     hostname: radarr
     restart: unless-stopped
@@ -130,7 +130,7 @@ services:
       - transmission
 
   lidarr:
-    image: linuxserver/lidarr
+    image: linuxserver/lidarr:0.8.1.2135-ls48
     container_name: lidarr
     hostname: lidarr
     restart: unless-stopped
@@ -147,7 +147,7 @@ services:
       - transmission
 
   lazylibrarian:
-    image: linuxserver/lazylibrarian
+    image: linuxserver/lazylibrarian:16da8168-ls24
     container_name: lazylibrarian
     hostname: lazylibrarian
     restart: unless-stopped
@@ -164,7 +164,7 @@ services:
       - transmission
 
   plex:
-    image: plexinc/pms-docker
+    image: plexinc/pms-docker:1.22.3.4392-d7c624def
     container_name: plex
     hostname: plex
     restart: unless-stopped
@@ -221,7 +221,7 @@ services:
       - "traefik.http.middlewares.plex-ratelimit.ratelimit.burst=50"
 
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v2.26.0
     container_name: prometheus
     hostname: prometheus
     restart: unless-stopped
@@ -246,7 +246,7 @@ services:
       - "--web.enable-lifecycle"
 
   alertmanager:
-    image: prom/alertmanager
+    image: prom/alertmanager:v0.21.0
     container_name: alertmanager
     hostname: alertmanager
     restart: unless-stopped
@@ -260,7 +260,7 @@ services:
       - "--config.file=/config.yml"
 
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:7.5.6
     container_name: grafana
     hostname: grafana
     restart: unless-stopped
@@ -280,7 +280,7 @@ services:
       - prometheus
 
   homer:
-    image: b4bz/homer
+    image: b4bz/homer:21.03.2
     container_name: homer
     hostname: homer
     restart: unless-stopped
@@ -291,7 +291,7 @@ services:
       - ./docker-configs/homer/assets:/www/assets
 
   duplicati:
-    image: linuxserver/duplicati
+    image: linuxserver/duplicati:v2.0.6.1-2.0.6.1_beta_2021-05-03-ls99
     container_name: duplicati
     hostname: duplicati
     restart: unless-stopped
