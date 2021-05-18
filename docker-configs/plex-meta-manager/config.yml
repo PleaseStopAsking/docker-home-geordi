@@ -13,6 +13,8 @@ settings:
   show_unmanaged: true
   show_filtered: false
   run_again_delay: 0
+  asset_folders: true
+  assets_for_all: false
 plex:
   token: <REPLACEME>
   url: http://192.168.4.46:32400
@@ -29,3 +31,5 @@ radarr:
   url: http://192.168.4.46:7878
   version: v3
   tag:
+  monitor: true
+  availability: announced
