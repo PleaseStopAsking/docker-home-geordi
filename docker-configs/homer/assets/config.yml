@@ -110,7 +110,7 @@ services:
     icon: "fas fa-database"
     items:
       - name: "OpenMediaVault"
-        logo: "assets/icons/omv.png"
+        logo: "assets/icons/openmediavault.png"
         subtitle: "Network Storage"
         url: "http://192.168.4.46:6080/"
       - name: "Duplicati"
