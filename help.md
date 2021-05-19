@@ -1,7 +1,6 @@
 ## Get list of file extensions
 ```find /example/path -type f | sed 's|.*\.||' | sort -u```
 
-
 ## Get list of files that match a given syntax
 ```find /example/path -name "*.txt" -print```
 
@@ -81,3 +80,14 @@ This process must be done at both the OpenMediaVault GUI level as well as the CL
 6. Unmount the disk from the `File Systems` panel
 
 7. Wipe the disk from the `Disks` panel
+
+## Troubleshoot container DNS/Network issues
+```docker run --rm -it ubuntu bash -c "apt update && apt install curl -y && curl ipecho.net/plain"```
+
+```docker run --rm -it alpine sh -c "apk add curl && curl ipecho.net/plain"```
+
+```docker run --rm -it alpine sh -c "apk add curl && curl https://api.ipify.org?format=json"```
+
+```docker run busybox ping -c 1 192.203.230.10```
+
+```docker run busybox nslookup google.com```
