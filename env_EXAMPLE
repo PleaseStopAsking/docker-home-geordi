@@ -53,6 +53,3 @@ traefik_duckdns_domain=placeholder.duckdns.org
 
 # token from your duckdns account home page
 traefik_duckdns_token=<REPLACEME>
-
-# cred must be generated with a tool such as HTPASSWD or https://www.web2generators.com/apache-tools/htpasswd-generator !! NOT USED !!
-#traefik_cred=<DUMBADMINUSERNAME:PASSWORDSTRING>
