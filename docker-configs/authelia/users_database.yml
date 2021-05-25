@@ -1,0 +1,17 @@
+---
+###############################################################
+#                         Users Database                      #
+###############################################################
+# Generate password
+# docker run authelia/authelia:latest authelia hash-password 'replaceme'
+
+users:
+  example:
+    displayname: "Example User"
+    # example password is replaceme
+    password: "$argon2id$v=19$m=65536,t=1,p=8$c1dXUzFiejZSeENIVWtRRQ$vGiiWY/45YfWAMJbG9cm+ajrQaBsjPHxoR0yFQDzLYw"
+    email: replaceme@example.com
+    groups:
+      - admins
+      - dev
+...

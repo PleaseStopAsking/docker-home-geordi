@@ -330,3 +330,28 @@ services:
       - "traefik.http.routers.metrics.service=api@internal"
       - "traefik.http.routers.metrics.entrypoints=metrics"
       - "traefik.http.routers.metrics.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
+
+  authelia:
+    image: authelia/authelia:4.29.4
+    container_name: authelia
+    hostname: authelia
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+    expose:
+      - 7443
+    volumes:
+      - ./docker-configs/authelia/:/config
+    environment:
+      - TZ=${timezone}
+    labels:
+      - 'traefik.enable=true'
+      # Routers
+      - 'traefik.http.routers.authelia.rule=Host(`login.${traefik_duckdns_domain}`)'
+      - 'traefik.http.routers.authelia.entrypoints=https'
+      - 'traefik.http.routers.authelia.tls=true'
+      - 'traefik.http.routers.authelia.tls.certresolver=letsencrypt'
+      # Middleware
+      - 'traefik.http.middlewares.authelia.forwardauth.address=http://authelia:7443/api/verify?rd=https://login.${traefik_duckdns_domain}'
+      - 'traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true'
+      - 'traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=X-Forward-User'

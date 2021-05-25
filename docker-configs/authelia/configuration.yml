@@ -1,0 +1,79 @@
+---
+###############################################################################
+#                           Authelia Configuration                            #
+###############################################################################
+
+## The host and port to listen on.
+host: 0.0.0.0
+port: 7443
+
+# Defines the secret used to craft JWT tokens leveraged by the identity verification process.
+jwt_secret: replaceme
+
+## The theme to display: light, dark, grey.
+theme: light
+
+server:
+  read_buffer_size: 4096
+  write_buffer_size: 4096
+
+## Level of verbosity for logs: info, debug, trace.
+log_level: debug
+
+## Format the logs are written as: json, text.
+log_format: text
+
+## File path where the logs will be written. If not set logs are written to stdout.
+log_file_path: /config/authelia.log
+
+totp:
+  issuer: authelia.com
+  period: 30
+  skew: 1
+
+authentication_backend:
+  disable_reset_password: true
+  refresh_interval: 5m
+  file:
+    path: /config/users_database.yml
+    password:
+      algorithm: argon2id
+      iterations: 1
+      key_length: 32
+      salt_length: 16
+      memory: 1024
+      parallelism: 8
+
+access_control:
+  default_policy: deny
+  rules:
+    - domain: "*"
+      networks:
+        - 192.168.0.0/24
+      policy: bypass
+
+    - domain:
+      - replaceme.replaceme.duckdns.org
+      policy: two_factor
+
+session:
+  name: authelia_session
+  domain: replaceme.duckdns.org
+  same_site: lax
+  expiration: 1h
+  inactivity: 10m
+  remember_me_duration:  1M
+
+regulation:
+  max_retries: 3
+  find_time: 2m
+  ban_time: 5m
+
+storage:
+  local:
+    path: /config/db.sqlite3
+
+notifier:
+  disable_startup_check: false
+  filesystem:
+    filename: /config/notification.txt
