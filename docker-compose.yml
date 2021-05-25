@@ -36,15 +36,17 @@ services:
       - "9091:9091"
     volumes:
       - ./docker-configs/transmission/config:/config
+      - ./docker-configs/transmission/config/us5804.nordvpn.com.udp1194.ovpn:/etc/openvpn/custom/default.ovpn
       - ${data_folder_path}:/data
     environment:
       - CREATE_TUN_DEVICE=true
-      - OPENVPN_PROVIDER=NORDVPN
+      #- OPENVPN_PROVIDER=NORDVPN
+      #- NORDVPN_CATEGORY=legacy_p2p
+      #- NORDVPN_COUNTRY=US
+      - OPENVPN_PROVIDER=CUSTOM
       - OPENVPN_USERNAME=${transmission_openvpn_username}
       - OPENVPN_PASSWORD=${transmission_openvpn_password}
       - OPENVPN_OPTS=--inactive 3600 --ping 10 --ping-exit 60
-      - NORDVPN_CATEGORY=legacy_p2p
-      - NORDVPN_COUNTRY=US
       - WEBPROXY_ENABLED=false
       - LOCAL_NETWORK=${docker_host_network_cidr}
       - TZ=${timezone}
