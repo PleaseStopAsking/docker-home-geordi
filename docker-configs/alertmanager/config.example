@@ -4,5 +4,5 @@ route:
 receivers:
   - name: pushover
     pushover_configs:
-      - token: <REPLACEME>
-        user_key: <REPLACEME>
+    - token: <replaceme>
+      user_key: <replaceme>
