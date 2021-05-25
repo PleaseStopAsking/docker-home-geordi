@@ -67,6 +67,14 @@ services:
       driver: json-file
       options:
         max-size: 10m
+    labels:
+      - 'traefik.enable=true'
+      # Routers
+      - 'traefik.http.routers.transmission.rule=Host(`transmission.${traefik_duckdns_domain}`)'
+      - 'traefik.http.routers.transmission.entrypoints=https'
+      - 'traefik.http.routers.transmission.tls=true'
+      - 'traefik.http.routers.transmission.tls.certresolver=letsencrypt'
+      - 'traefik.http.routers.transmission.middlewares=authelia@docker'
 
   diun:
     image: crazymax/diun:4.16.1
@@ -114,6 +122,14 @@ services:
       - PUID=${uid}
     depends_on:
       - transmission
+    labels:
+    - 'traefik.enable=true'
+    # Routers
+    - 'traefik.http.routers.sonarr.rule=Host(`sonarr.${traefik_duckdns_domain}`)'
+    - 'traefik.http.routers.sonarr.entrypoints=https'
+    - 'traefik.http.routers.sonarr.tls=true'
+    - 'traefik.http.routers.sonarr.tls.certresolver=letsencrypt'
+    - 'traefik.http.routers.sonarr.middlewares=authelia@docker'
 
   radarr:
     image: linuxserver/radarr:3.1.1.4954-ls104
@@ -282,6 +298,14 @@ services:
       - GF_INSTALL_PLUGINS=grafana-piechart-panel
     depends_on:
       - prometheus
+    labels:
+    - 'traefik.enable=true'
+    # Routers
+    - 'traefik.http.routers.grafana.rule=Host(`grafana.${traefik_duckdns_domain}`)'
+    - 'traefik.http.routers.grafana.entrypoints=https'
+    - 'traefik.http.routers.grafana.tls=true'
+    - 'traefik.http.routers.grafana.tls.certresolver=letsencrypt'
+    - 'traefik.http.routers.grafana.middlewares=authelia@docker'
 
   homer:
     image: b4bz/homer:21.03.2
