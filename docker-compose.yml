@@ -189,10 +189,11 @@ services:
       - ${data_folder_path}:/data:ro
     labels:
       - "traefik.enable=true"
+      # Services
+      - "traefik.http.services.plex.loadbalancer.server.port=32400"
       # Routers
       - "traefik.http.routers.plex.rule=Host(`plex.${traefik_duckdns_domain}`)"
       - "traefik.http.routers.plex.entrypoints=https"
-      - "traefik.http.services.plex.loadbalancer.server.port=32400"
       - "traefik.http.routers.plex.tls=true"
       - "traefik.http.routers.plex.tls.certresolver=letsencrypt"
       - "traefik.http.routers.plex.middlewares=plex-secureheaders,plex-ratelimit"
