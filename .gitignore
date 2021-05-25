@@ -46,3 +46,9 @@ docker-configs/diun/diun.db
 docker-configs/authelia/authelia.log
 docker-configs/authelia/db.sqlite3
 docker-configs/authelia/notification.txt
+docker-configs/alertmanager/config.yml
+docker-configs/plex-meta-manager/config.yml
+docker-configs/diun/diun.yml
+docker-configs/traefik/acme.json
+docker-configs/authelia/configuration.yml
+docker-configs/authelia/users_database.yml
