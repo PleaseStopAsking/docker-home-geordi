@@ -43,3 +43,6 @@ docker-configs/plex-meta-manager/logs
 docker-configs/plex-meta-manager/Movies_missing.yml
 docker-configs/plex-meta-manager/TV Shows_missing.yml
 docker-configs/diun/diun.db
+docker-configs/authelia/authelia.log
+docker-configs/authelia/db.sqlite3
+docker-configs/authelia/notification.txt
