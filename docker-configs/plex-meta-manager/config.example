@@ -16,18 +16,18 @@ settings:
   asset_folders: true
   assets_for_all: false
 plex:
-  token: <REPLACEME>
+  token: <replaceme>
   url: http://192.168.4.46:32400
   timeout: 60
 tmdb:
-  apikey: <REPLACEME>
+  apikey: <replaceme>
   language: en
 radarr:
   add: true
   quality_profile: 1080p-bluray
   root_folder_path: /data/8d19a07a-03d5-45f1-85dc-ccd49430f386/data/media/Movies
   search: false
-  token: <REPLACEME>
+  token: <replaceme>
   url: http://192.168.4.46:7878
   version: v3
   tag:
