@@ -542,11 +542,21 @@ collections:
     tmdb_collection_details: 100970
     url_background: https://www.themoviedb.org/t/p/original/rtGHWe3rr3FgWNKA5eXqemr6mzo.jpg
     url_poster: https://www.themoviedb.org/t/p/original/ph2KiQxp8xmgA5ENoBhETvJnYw9.jpg
+  The Godfather:
+    collection_order: release
+    tmdb_collection_details: 230
+    url_background: https://www.themoviedb.org/t/p/original/3WZTxpgscsmoUk81TuECXdFOD0R.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/zqV8MGXfpLZiFVObLxpAI7wWonJ.jpg
   The Incredibles:
     collection_order: release
     tmdb_collection_details: 468222
     url_background: https://www.themoviedb.org/t/p/original/6oi6V1O9MJRNnfV8E9JMntmFqBD.jpg
     url_poster: https://www.themoviedb.org/t/p/original/xMX1jZyObVeWUxDQmt53X6jzIO4.jpg
+  The Karate Kid:
+    collection_order: release
+    tmdb_collection_details: 8580
+    url_background: https://www.themoviedb.org/t/p/original/sq4c328WCIFIVD7B9ZGFRwDbUTH.jpg
+    url_poster: https://www.themoviedb.org/t/p/original/o6h2F0C5eZOy50Q76fNYzc9mvvw.jpg
   The Lego Movie:
     collection_order: release
     tmdb_collection_details: 325470
