@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>CFBundleIdentifier</key>
+		<string>com.arendshome.plex.agents.personalmedia</string>
+		
+       	<key>PlexAgentAttributionText</key>
+        <string>
+            Provides an agent capable of parsing files names to extract the episode titles. Primarily used for personal media
+            that use the format SHOW TITLE - yyyy-MM-dd - EPISODE TITLE.ext or SHOW TITLE - sXXXXeXXXX - EPISODE TITLE.ext (Version: 2021-07-03)
+        </string>
+   
+		<key>PlexFrameworkVersion</key>
+		<string>2</string>
+		
+		<key>PlexPluginClass</key>
+		<string>Agent</string>
+        
+        <key>PlexPluginCodePolicy</key>
+        <string>Elevated</string>
+		
+		<key>PlexPluginConsoleLogging</key>
+        <string>1</string>
+
+        <key>PlexPluginDevMode</key>
+        <string>1</string>
+	</dict>
+</plist>

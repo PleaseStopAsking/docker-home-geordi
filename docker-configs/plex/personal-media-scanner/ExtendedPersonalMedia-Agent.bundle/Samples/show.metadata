@@ -1,0 +1,13 @@
+[metadata]
+title=Title of the show
+summary=Summary of the show
+ This is how to start a 2nd line. Make sure you indent the line of text.
+# Release date of the show. Date needs to follow the YYYY-MM-DD format
+release=2017-05-01
+studio=Studio XYZ
+# comma separated list of genres
+genres=Linux, Automation
+# comma separated list of Collection names
+collections=Holiday,Family
+# comma separate list of actors
+actors=First Actor,Second Actor

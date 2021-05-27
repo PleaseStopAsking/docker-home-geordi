@@ -1,0 +1,9 @@
+[metadata]
+title=Title of the episode
+summary=Summary of the episode
+# Release date of the episode. Date needs to follow the YYYY-MM-DD format
+release=2017-06-01
+# List of writers
+writers=First Writer,Second Writer
+# List of Directors
+directors=First Director,Second Director

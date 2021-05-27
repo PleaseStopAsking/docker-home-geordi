@@ -1,0 +1,96 @@
+[
+    {
+        "id": "logger.debug.enabled",
+        "label": "Enable debug logging?",
+        "type": "bool",
+        "default": "false"
+    },
+    {
+        "id": "episode.use.last.modified.timestamp.enabled",
+        "label": "Use last modified timestamp for episodes?",
+        "type": "bool",
+        "default": "true"
+    },
+    {
+        "id": "episode.use.created.timestamp.enabled",
+        "label": "Use created timestamp for episodes (can only be enabled if 'Use last modified timestamp' is NOT enabled)?",
+        "type": "bool",
+        "default": "false"
+    },
+    {
+        "id": "episode.title.scrub.enabled",
+        "label": "Enable episode title scrubbing?",
+        "type": "bool",
+        "default": "true"
+    },
+    {
+        "id": "episode.title.scrub.characters",
+        "label": "Comma separated list of values to scrub from the episode title (default value: .= ,-= ,_= ). The format of the setting is A=B,C=D where A will be replaced by B and C will be replaced by D. This setting is only applicable when Enable episode title scrubbing? is enabled.",
+        "type": "text",
+        "default": ".= ,-= ,_= "
+    },
+    {
+        "id": "summary.file.extension",
+        "label": "File extension to use for summary files (default value: summary). Do not include the period ('.') in the value.",
+        "type": "text",
+        "default": "summary"
+    },
+    {
+		"id": "use.show.metadata.enabled",
+		"label": "Use metadata file for shows?",
+		"type": "bool",
+		"default": "false"
+    },
+    {
+		"id": "use.season.metadata.enabled",
+		"label": "Use metadata file for seasons?",
+		"type": "bool",
+		"default": "false"
+    },
+    {
+        "id": "use.episode.metadata.enabled",
+        "label": "Use metadata file for episodes?",
+        "type": "bool",
+        "default": "false"
+    },
+    {
+        "id": "metadata.file.extension",
+        "label": "File extension to use for metadata files (default value: metadata). Do not include the period ('.') in the value.",
+        "type": "text",
+        "default": "metadata"
+    },
+    {
+        "id": "episode.add.time.to.title.enabled",
+        "label": "Use time stamp from the file name in the episode title (default value: false). Only valid for files following date/time naming format.",
+        "type": "bool",
+        "default": "false"
+    },
+    {
+        "id": "episode.add.time.to.title.format",
+        "label": "Episode title time stamp format (default value: 24 Hour). Only valid if 'Use time stamp from the file name in the episode title' is selected.",
+        "type": "enum",
+        "values": [
+            "AM/PM",
+            "24 Hour"
+            ],
+        "default": "24 Hour"
+    },
+    {
+        "id": "episode.add.date.to.title.enabled",
+        "label": "Use date from the file name in the episode title (default value: false). Only valid for files following date/time naming format.",
+        "type": "bool",
+        "default": "false"
+    },
+    {
+        "id": "episode.add.date.to.title.format",
+        "label": "Episode title date format (default value: YYYY-MM-DD). Only applies to episodes that include dates.",
+        "type": "enum",
+        "values": [
+            "YYYY-MM-DD",
+            "YYYY/MM/DD",
+            "MM-DD",
+            "MM/DD"
+            ],
+        "default": "YYYY-MM-DD"
+    }
+]
