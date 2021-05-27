@@ -199,7 +199,7 @@ services:
       - ALLOWED_NETWORKS=${docker_host_network_cidr}
       - HOSTNAME=${plex_hostname}
     hostname: plex
-    image: plexinc/pms-docker:1.23.1.4571-6119e8eed
+    image: plexinc/pms-docker:1.22.3.4523-d0ce30438
     labels:
       - traefik.enable=true
       - traefik.http.services.plex.loadbalancer.server.port=32400
@@ -219,6 +219,8 @@ services:
     restart: unless-stopped
     volumes:
       - plex:/config
+      - ./docker-configs/plex/personal-media-scanner/Series:/config/Library/Application\ Support/Plex\ Media\ Server/Scanners/Series:ro
+      - ./docker-configs/plex/personal-media-scanner/ExtendedPersonalMedia-Agent.bundle:/config/Library/Application\ Support/Plex\ Media\ Server/Plug-ins/ExtendedPersonalMedia-Agent.bundle
       - plex_transcode:/transcode
       - ${data_folder_path}:/data:ro
 
