@@ -1,48 +1,348 @@
+---
 version: "3"
 
 services:
-  node-exporter:
-    image: prom/node-exporter:v1.1.2
-    container_name: node-exporter
-    hostname: node-exporter
-    restart: unless-stopped
+  alertmanager:
+    command:
+      - "--config.file=/config.yml"
+    container_name: alertmanager
+    hostname: alertmanager
+    image: prom/alertmanager:v0.21.0
     ports:
-      - "9100:9100"
+      - 9093:9093
+    restart: unless-stopped
     volumes:
-      - ${data_folder_path}:/data:ro
+      - alertmanager:/alertmanager
+      - ./docker-configs/alertmanager/config.yml:/config.yml:ro
+
+  authelia:
+    container_name: authelia
+    environment:
+      - TZ=${timezone}
+    expose:
+      - 7443
+    healthcheck:
+      disable: true
+    hostname: authelia
+    image: authelia/authelia:4.29.4
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.authelia.rule=Host(`login.${traefik_duckdns_domain}`)
+      - traefik.http.routers.authelia.entrypoints=https
+      - traefik.http.routers.authelia.tls=true
+      - traefik.http.routers.authelia.tls.certresolver=letsencrypt
+      - traefik.http.middlewares.authelia.forwardauth.address=http://authelia:7443/api/verify?rd=https://login.${traefik_duckdns_domain}
+      - traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true
+      - traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=X-Forward-User
+    restart: unless-stopped
+    volumes:
+      - authelia:/config
+      - ./docker-configs/authelia/configuration.yml:/config/configuration.yml:ro
+      - ./docker-configs/authelia/users_database.yml:/config/users_database.yml:ro
 
   cadvisor:
-    image: gcr.io/google-containers/cadvisor:v0.36.0
     container_name: cadvisor
     hostname: cadvisor
-    restart: unless-stopped
+    image: gcr.io/google-containers/cadvisor:v0.36.0
     ports:
-      - "8080:8080"
+      - 8080:8080
+    restart: unless-stopped
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
 
-  transmission:
-    image: haugene/transmission-openvpn:3.6
-    container_name: transmission
-    hostname: transmission
-    restart: unless-stopped
-    #dns:
-    #  - 1.1.1.1
-    #  - 1.0.0.1
-    ports:
-      - "9091:9091"
+  diun:
+    container_name: diun
+    environment:
+      - TZ=${timezone}
+      - LOG_LEVEL=info
+      - LOG_JSON=false
+    hostname: diun
+    image: crazymax/diun:4.16.1
+    restart: always
     volumes:
-      - ./docker-configs/transmission/config:/config
-      - ./docker-configs/transmission/config/us5804.nordvpn.com.udp1194.ovpn:/etc/openvpn/custom/default.ovpn
+      - diun:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker-configs/diun/diun.yml:/diun.yml:ro
+
+  duplicati:
+    container_name: duplicati
+    environment:
+      - TZ=${timezone}
+      - GUID=${gid}
+      - PUID=${uid}
+    hostname: duplicati
+    image: linuxserver/duplicati:v2.0.6.1-2.0.6.1_beta_2021-05-03-ls99
+    ports:
+      - 8200:8200
+    restart: unless-stopped
+    volumes:
+      - duplicati:/config
+      - duplicati_local:/backups
+      - /var/lib/docker/volumes:/source
+      - ${data_folder_path}:/srv:ro
+
+  grafana:
+    container_name: grafana
+    depends_on:
+      - prometheus
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${grafana_password}
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    hostname: grafana
+    image: grafana/grafana:7.5.6
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.sonarr.loadbalancer.server.port=3000
+      - traefik.http.routers.grafana.rule=Host(`grafana.${traefik_duckdns_domain}`)
+      - traefik.http.routers.grafana.entrypoints=https
+      - traefik.http.routers.grafana.tls=true
+      - traefik.http.routers.grafana.tls.certresolver=letsencrypt
+      - traefik.http.routers.grafana.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    user: root
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./docker-configs/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./docker-configs/grafana/provisioning/plugins:/var/lib/grafana/plugins
+      - ./docker-configs/grafana/provisioning:/etc/grafana/provisioning
+
+  homer:
+    container_name: homer
+    hostname: homer
+    image: b4bz/homer:21.03.2
+    ports:
+      - 8888:8080
+    restart: unless-stopped
+    volumes:
+      - homer:/www/assets
+      - ./docker-configs/homer/icons:/www/assets/icons
+      - ./docker-configs/homer/config.yml:/www/config.yml:ro
+
+  jackett:
+    container_name: jackett
+    depends_on:
+      - transmission
+    environment:
+      - TZ=${timezone}
+      - AUTO_UPDATE=true
+    hostname: jackett
+    image: linuxserver/jackett:v0.18.31-ls31
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+    volumes:
+      - jackett:/config
+
+  lazylibrarian:
+    container_name: lazylibrarian
+    depends_on:
+      - transmission
+    environment:
+      - TZ=${timezone}
+      - GUID=${gid}
+      - PUID=${uid}
+    hostname: lazylibrarian
+    image: linuxserver/lazylibrarian:16da8168-ls24
+    ports:
+      - 5299:5299
+    restart: unless-stopped
+    volumes:
+      - lazylibrarian:/config
+      - ${data_folder_path}:/books
+
+  lidarr:
+    container_name: lidarr
+    depends_on:
+      - transmission
+    environment:
+      - TZ=${timezone}
+      - GUID=${gid}
+      - PUID=${uid}
+    hostname: lidarr
+    image: linuxserver/lidarr:0.8.1.2135-ls48
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.lidarr.loadbalancer.server.port=8686
+      - traefik.http.routers.lidarr.rule=Host(`lidarr.${traefik_duckdns_domain}`)
+      - traefik.http.routers.lidarr.entrypoints=https
+      - traefik.http.routers.lidarr.tls=true
+      - traefik.http.routers.lidarr.tls.certresolver=letsencrypt
+      - traefik.http.routers.lidarr.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+    volumes:
+      - lidarr:/config
       - ${data_folder_path}:/data
+
+  node-exporter:
+    container_name: node-exporter
+    hostname: node-exporter
+    image: prom/node-exporter:v1.1.2
+    ports:
+      - 9100:9100
+    restart: unless-stopped
+    volumes:
+      - ${data_folder_path}:/data:ro
+
+  plex:
+    container_name: plex
+    environment:
+      - TZ=${timezone}
+      - PLEX_CLAIM=${plex_claim_token}
+      - ADVERTISE_IP=https://plex.${traefik_duckdns_domain}:443,https://${docker_host_ip}:32400
+      - ALLOWED_NETWORKS=${docker_host_network_cidr}
+      - HOSTNAME=${plex_hostname}
+    hostname: plex
+    image: plexinc/pms-docker:1.22.3.4523-d0ce30438
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.plex.loadbalancer.server.port=32400
+      - traefik.http.routers.plex.rule=Host(`plex.${traefik_duckdns_domain}`)
+      - traefik.http.routers.plex.entrypoints=https
+      - traefik.http.routers.plex.tls=true
+      - traefik.http.routers.plex.tls.certresolver=letsencrypt
+      - traefik.http.routers.plex.middlewares=baseline-secureheaders@file,baseline-ratelimits@file,plex-headers
+      - traefik.http.middlewares.plex-headers.headers.accesscontrolalloworiginlist=https://plex.${traefik_duckdns_domain}
+      - "traefik.http.middlewares.plex-headers.headers.contentSecurityPolicy=default-src 'none'; base-uri 'self'; script-src 'self' 'sha256-4yWHSc589xcanc7GAAy3++M4EvUxNtUsJySeoYEE6z8=' 'sha256-9YWnVu29Ew4LEW4tEiPWEdcHvzlbbwpiazu4PZR3oTY='; style-src 'self'; img-src 'self' https://provider-static.plex.tv data: blob:; font-src 'self' data:; connect-src 'self' https://plex.tv https://*.plex.direct:* wss://*.plex.direct:* wss://pubsub.plex.tv; media-src 'self' https://*.plex.direct:*; object-src 'self'; child-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; referrer no-referrer"
+    ports:
+      - 32400:32400/tcp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+    restart: unless-stopped
+    volumes:
+      - plex:/config
+      - plex_transcode:/transcode
+      - ${data_folder_path}:/data:ro
+
+  portainer:
+    container_name: portainer
+    hostname: portainer
+    image: portainer/portainer-ce:linux-amd64-2.5.0
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.portainer.loadbalancer.server.port=9000
+      - traefik.http.routers.portainer.rule=Host(`portainer.${traefik_duckdns_domain}`)
+      - traefik.http.routers.portainer.entrypoints=https
+      - traefik.http.routers.portainer.tls=true
+      - traefik.http.routers.portainer.tls.certresolver=letsencrypt
+      - traefik.http.routers.portainer.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
+    ports:
+      - 9000:9000
+      #- 8000:8000
+    restart: unless-stopped
+    volumes:
+      - portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  prometheus:
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--web.route-prefix=/"
+      - "--storage.tsdb.retention.time=200h"
+      - "--web.enable-lifecycle"
+    container_name: prometheus
+    environment:
+      - TZ=${timezone}
+    hostname: prometheus
+    image: prom/prometheus:v2.26.0
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+    user: root
+    volumes:
+      - prometheus:/prometheus
+      - ./docker-configs/prometheus/alertrules.yml:/etc/prometheus/alertrules.yml:ro
+      - ./docker-configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  radarr:
+    container_name: radarr
+    depends_on:
+      - transmission
+    environment:
+      - TZ=${timezone}
+      - GUID=${gid}
+      - PUID=${uid}
+    hostname: radarr
+    image: linuxserver/radarr:3.1.1.4954-ls104
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.radarr.loadbalancer.server.port=7878
+      - traefik.http.routers.radarr.rule=Host(`radarr.${traefik_duckdns_domain}`)
+      - traefik.http.routers.radarr.entrypoints=https
+      - traefik.http.routers.radarr.tls=true
+      - traefik.http.routers.radarr.tls.certresolver=letsencrypt
+      - traefik.http.routers.radarr.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    volumes:
+      - radarr:/config
+      - ${data_folder_path}:/data
+
+  sonarr:
+    container_name: sonarr
+    depends_on:
+      - transmission
+    environment:
+      - TZ=${timezone}
+      - GUID=${gid}
+      - PUID=${uid}
+    hostname: sonarr
+    image: linuxserver/sonarr:3.0.6.1196-ls104
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.sonarr.loadbalancer.server.port=8989
+      - traefik.http.routers.sonarr.rule=Host(`sonarr.${traefik_duckdns_domain}`)
+      - traefik.http.routers.sonarr.entrypoints=https
+      - traefik.http.routers.sonarr.tls=true
+      - traefik.http.routers.sonarr.tls.certresolver=letsencrypt
+      - traefik.http.routers.sonarr.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    volumes:
+      - sonarr:/config
+      - ${data_folder_path}:/data
+
+  traefik:
+    container_name: traefik
+    environment:
+      - DUCKDNS_TOKEN=${traefik_duckdns_token}
+    hostname: traefik
+    image: traefik:v2.4
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.metrics.service=api@internal
+      - traefik.http.routers.metrics.entrypoints=metrics
+      - traefik.http.routers.metrics.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)
+    ports:
+      - 80:80
+      - 443:443
+      - 8441:8441
+    restart: always
+    volumes:
+      - traefik:/traefik
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker-configs/traefik/traefik.yml:/traefik.yml:ro
+      - ./docker-configs/traefik/configs:/configs:ro
+
+  transmission:
+    cap_add:
+      - NET_ADMIN
+    container_name: transmission
     environment:
       - CREATE_TUN_DEVICE=true
-      #- OPENVPN_PROVIDER=NORDVPN
-      #- NORDVPN_CATEGORY=legacy_p2p
-      #- NORDVPN_COUNTRY=US
       - OPENVPN_PROVIDER=CUSTOM
       - OPENVPN_USERNAME=${transmission_openvpn_username}
       - OPENVPN_PASSWORD=${transmission_openvpn_password}
@@ -52,7 +352,6 @@ services:
       - TZ=${timezone}
       - TRANSMISSION_SCRAPE_PAUSED_TORRENTS_ENABLED=false
       - TRANSMISSION_WEB_UI=flood
-      #- TRANSMISSION_WEB_UI=kettu
       - TRANSMISSION_RATIO_LIMIT=1
       - TRANSMISSION_RATIO_LIMIT_ENABLED=true
       - TRANSMISSION_WATCH_DIR_ENABLED=false
@@ -61,325 +360,79 @@ services:
       - TRANSMISSION_HOME=${transmission_home_dir}
       - TRANSMISSION_DOWNLOAD_DIR=${transmission_downloaded_dir}
       - TRANSMISSION_INCOMPLETE_DIR=${transmission_incomplete_dir}
-    cap_add:
-      - NET_ADMIN
+    hostname: transmission
+    image: haugene/transmission-openvpn:3.6
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.transmission.loadbalancer.server.port=9091
+      - traefik.http.routers.transmission.rule=Host(`transmission.${traefik_duckdns_domain}`)
+      - traefik.http.routers.transmission.entrypoints=https
+      - traefik.http.routers.transmission.tls=true
+      - traefik.http.routers.transmission.tls.certresolver=letsencrypt
+      - traefik.http.routers.transmission.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
     logging:
       driver: json-file
       options:
         max-size: 10m
-    labels:
-      - 'traefik.enable=true'
-      # Routers
-      - 'traefik.http.routers.transmission.rule=Host(`transmission.${traefik_duckdns_domain}`)'
-      - 'traefik.http.routers.transmission.entrypoints=https'
-      - 'traefik.http.routers.transmission.tls=true'
-      - 'traefik.http.routers.transmission.tls.certresolver=letsencrypt'
-      - 'traefik.http.routers.transmission.middlewares=authelia@docker'
-
-  diun:
-    image: crazymax/diun:4.16.1
-    container_name: diun
-    hostname: diun
-    restart: always
-    volumes:
-      - ./docker-configs/diun/diun.yml:/diun.yml:ro
-      - ./docker-configs/diun/:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - TZ=${timezone}
-      - LOG_LEVEL=info
-      - LOG_JSON=false
-
-  jackett:
-    image: linuxserver/jackett:v0.18.31-ls31
-    container_name: jackett
-    hostname: jackett
-    restart: unless-stopped
     ports:
-      - 9117:9117
-    volumes:
-      - ./docker-configs/jackett/config:/config
-      - ./docker-configs/jackett/blackhole:/downloads
-    environment:
-      - TZ=${timezone}
-      - AUTO_UPDATE=true
-    depends_on:
-      - transmission
-
-  sonarr:
-    image: linuxserver/sonarr:3.0.6.1196-ls104
-    container_name: sonarr
-    hostname: sonarr
+      - 9091:9091
     restart: unless-stopped
-    ports:
-      - 8989:8989
     volumes:
-      - ./docker-configs/sonarr/config:/config
+      - transmission:/config
+      - ./docker-configs/transmission/us5804.nordvpn.com.udp1194.ovpn:/etc/openvpn/custom/default.ovpn:ro
       - ${data_folder_path}:/data
-    environment:
-      - TZ=${timezone}
-      - GUID=${gid}
-      - PUID=${uid}
-    depends_on:
-      - transmission
-    labels:
-    - 'traefik.enable=true'
-    # Routers
-    - 'traefik.http.routers.sonarr.rule=Host(`sonarr.${traefik_duckdns_domain}`)'
-    - 'traefik.http.routers.sonarr.entrypoints=https'
-    - 'traefik.http.routers.sonarr.tls=true'
-    - 'traefik.http.routers.sonarr.tls.certresolver=letsencrypt'
-    - 'traefik.http.routers.sonarr.middlewares=authelia@docker'
 
-  radarr:
-    image: linuxserver/radarr:3.1.1.4954-ls104
-    container_name: radarr
-    hostname: radarr
-    restart: unless-stopped
-    ports:
-      - 7878:7878
-    volumes:
-      - ./docker-configs/radarr/config:/config
-      - ${data_folder_path}:/data
-    environment:
-      - TZ=${timezone}
-      - GUID=${gid}
-      - PUID=${uid}
-    depends_on:
-      - transmission
-
-  lidarr:
-    image: linuxserver/lidarr:0.8.1.2135-ls48
-    container_name: lidarr
-    hostname: lidarr
-    restart: unless-stopped
-    ports:
-      - 8686:8686
-    volumes:
-      - ./docker-configs/lidarr/config:/config
-      - ${data_folder_path}:/data
-    environment:
-      - TZ=${timezone}
-      - GUID=${gid}
-      - PUID=${uid}
-    depends_on:
-      - transmission
-
-  lazylibrarian:
-    image: linuxserver/lazylibrarian:16da8168-ls24
-    container_name: lazylibrarian
-    hostname: lazylibrarian
-    restart: unless-stopped
-    ports:
-      - 5299:5299
-    volumes:
-      - ./docker-configs/lazylibrarian/config:/config
-      - ${data_folder_path}:/books
-    environment:
-      - TZ=${timezone}
-      - GUID=${gid}
-      - PUID=${uid}
-    depends_on:
-      - transmission
-
-  plex:
-    image: plexinc/pms-docker:1.22.3.4523-d0ce30438
-    container_name: plex
-    hostname: plex
-    restart: unless-stopped
-    ports:
-      - 32400:32400/tcp
-      - 32410:32410/udp
-      - 32412:32412/udp
-      - 32413:32413/udp
-      - 32414:32414/udp
-    environment:
-      - TZ=${timezone}
-      - PLEX_CLAIM=${plex_claim_token}
-      - ADVERTISE_IP=https://plex.${traefik_duckdns_domain}:443,https://${docker_host_ip}:32400
-      - ALLOWED_NETWORKS=${docker_host_network_cidr}
-      - HOSTNAME=${plex_hostname}
-    volumes:
-      - ./docker-configs/plex/database:/config
-      - ./docker-configs/plex/config:/transcode
-      - ${data_folder_path}:/data:ro
-    labels:
-      - "traefik.enable=true"
-      # Services
-      - "traefik.http.services.plex.loadbalancer.server.port=32400"
-      # Routers
-      - "traefik.http.routers.plex.rule=Host(`plex.${traefik_duckdns_domain}`)"
-      - "traefik.http.routers.plex.entrypoints=https"
-      - "traefik.http.routers.plex.tls=true"
-      - "traefik.http.routers.plex.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.plex.middlewares=plex-secureheaders,plex-ratelimit"
-      # Middleware
-      - "traefik.http.middlewares.plex-secureheaders.headers.accessControlAllowMethods=GET, OPTIONS, PUT"
-      - "traefik.http.middlewares.plex-secureheaders.headers.accessControlMaxAge=100"
-      - "traefik.http.middlewares.plex-secureheaders.headers.addVaryHeader=true"
-      - "traefik.http.middlewares.plex-secureheaders.headers.accesscontrolalloworiginlist=https://plex.${traefik_duckdns_domain}"
-      - "traefik.http.middlewares.plex-secureheaders.headers.hostsProxyHeaders=X-Forwarded-Host"
-      - "traefik.http.middlewares.plex-secureheaders.headers.sslRedirect=true"
-      - "traefik.http.middlewares.plex-secureheaders.headers.sslForceHost=true"
-      - "traefik.http.middlewares.plex-secureheaders.headers.sslProxyHeaders.X-Forwarded-Proto=https"
-      - "traefik.http.middlewares.plex-secureheaders.headers.stsSeconds=63072000"
-      - "traefik.http.middlewares.plex-secureheaders.headers.stsIncludeSubdomains=true"
-      - "traefik.http.middlewares.plex-secureheaders.headers.stsPreload=true"
-      - "traefik.http.middlewares.plex-secureheaders.headers.forceSTSHeader=true"
-      - "traefik.http.middlewares.plex-secureheaders.headers.frameDeny=true"
-      - "traefik.http.middlewares.plex-secureheaders.headers.contentTypeNosniff=true"
-      - "traefik.http.middlewares.plex-secureheaders.headers.browserXssFilter=true"
-      - "traefik.http.middlewares.plex-secureheaders.headers.referrerPolicy=strict-origin-when-cross-origin"
-      - "traefik.http.middlewares.plex-secureheaders.headers.contentSecurityPolicy=default-src 'none'; base-uri 'self'; script-src 'self' 'sha256-4yWHSc589xcanc7GAAy3++M4EvUxNtUsJySeoYEE6z8=' 'sha256-9YWnVu29Ew4LEW4tEiPWEdcHvzlbbwpiazu4PZR3oTY='; style-src 'self'; img-src 'self' https://provider-static.plex.tv data: blob:; font-src 'self' data:; connect-src 'self' https://plex.tv https://*.plex.direct:* wss://*.plex.direct:* wss://pubsub.plex.tv; media-src 'self' https://*.plex.direct:*; object-src 'self'; child-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; referrer no-referrer"
-      - "traefik.http.middlewares.plex-secureheaders.headers.featurePolicy=camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
-      - "traefik.http.middlewares.plex-secureheaders.headers.customResponseHeaders.X-Robots-Tag=none,noarchive,nosnippet,notranslate,noimageindex"
-      #- "traefik.http.middlewares.plex-secureheaders.headers.customResponseHeaders.Permissions-Policy=camera=(), geolocation=(), microphone=(), payment=(), usb=(), vr=()"
-      #- "traefik.http.middlewares.plex-secureheaders.headers.customResponseHeaders.Access-Control-Allow-Origin=https://plex.${traefik_duckdns_domain}"
-      #- "traefik.http.middlewares.plex-secureheaders.headers.allowedHosts=plex.${traefik_duckdns_domain}" TODO - Plex app never loads data!
-      #- "traefik.http.middlewares.plex-secureheaders.headers.sslHost=plex.${traefik_duckdns_domain}" # TODO - Allows Plex app to load data but nothing plays!
-      - "traefik.http.middlewares.plex-ratelimit.ratelimit.average=100"
-      - "traefik.http.middlewares.plex-ratelimit.ratelimit.burst=50"
-
-  prometheus:
-    image: prom/prometheus:v2.26.0
-    container_name: prometheus
-    hostname: prometheus
-    restart: unless-stopped
-    user: root
-    ports:
-      - "9090:9090"
-    volumes:
-      - "./docker-configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"
-      - "./docker-configs/prometheus/config:/var/lib/prometheus"
-      - "./docker-configs/prometheus/config:/prometheus"
-      - "./docker-configs/prometheus/config:/etc/prometheus"
-      - "./docker-configs/prometheus/alertrules.yml:/etc/prometheus/alertrules.yml:ro"
-    environment:
-      - TZ=${timezone}
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-      - "--storage.tsdb.path=/prometheus"
-      - "--web.console.libraries=/etc/prometheus/console_libraries"
-      - "--web.console.templates=/etc/prometheus/consoles"
-      - "--web.route-prefix=/"
-      - "--storage.tsdb.retention.time=200h"
-      - "--web.enable-lifecycle"
-
+volumes:
   alertmanager:
-    image: prom/alertmanager:v0.21.0
-    container_name: alertmanager
-    hostname: alertmanager
-    restart: unless-stopped
-    ports:
-      - 9093:9093
-    volumes:
-      - "./docker-configs/alertmanager/config.yml:/config.yml:ro"
-      - "./docker-configs/alertmanager:/alertmanager"
-      - "./docker-configs/alertmanager/data:/data"
-    command:
-      - "--config.file=/config.yml"
-
-  grafana:
-    image: grafana/grafana:7.5.6
-    container_name: grafana
-    hostname: grafana
-    restart: unless-stopped
-    user: root
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./docker-configs/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
-      - ./docker-configs/grafana:/var/lib/grafana
-      - ./docker-configs/grafana/logs:/var/log/grafana
-      - ./docker-configs/grafana/provisioning/plugins:/var/lib/grafana/plugins
-      - ./docker-configs/grafana/provisioning:/etc/grafana/provisioning
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=${grafana_password}
-      - GF_INSTALL_PLUGINS=grafana-piechart-panel
-    depends_on:
-      - prometheus
-    labels:
-    - 'traefik.enable=true'
-    # Routers
-    - 'traefik.http.routers.grafana.rule=Host(`grafana.${traefik_duckdns_domain}`)'
-    - 'traefik.http.routers.grafana.entrypoints=https'
-    - 'traefik.http.routers.grafana.tls=true'
-    - 'traefik.http.routers.grafana.tls.certresolver=letsencrypt'
-    - 'traefik.http.routers.grafana.middlewares=authelia@docker'
-
-  homer:
-    image: b4bz/homer:21.03.2
-    container_name: homer
-    hostname: homer
-    restart: unless-stopped
-    ports:
-      - "8888:8080"
-    volumes:
-      - ./docker-configs/homer/assets/config.yml:/www/config.yml:ro
-      - ./docker-configs/homer/assets:/www/assets
-
-  duplicati:
-    image: linuxserver/duplicati:v2.0.6.1-2.0.6.1_beta_2021-05-03-ls99
-    container_name: duplicati
-    hostname: duplicati
-    restart: unless-stopped
-    ports:
-      - 8200:8200
-    environment:
-      - TZ=${timezone}
-      #- CLI_ARGS=--backup-test-samples=0
-      - GUID=${gid}
-      - PUID=${uid}
-    volumes:
-      - ./docker-configs/duplicati/config:/config
-      - ./backups:/backups
-      - ./docker-configs:/source
-      - ${data_folder_path}:/srv:ro
-
-  traefik:
-    image: traefik:v2.4
-    container_name: traefik
-    hostname: traefik
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8441:8441"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./docker-configs/traefik/acme.json:/acme.json
-      - ./docker-configs/traefik/traefik.yml:/traefik.yml:ro
-      - ./docker-configs/traefik/configs:/configs:ro
-      - ./docker-configs/traefik/traefik.log:/traefik.log
-    environment:
-      - DUCKDNS_TOKEN=${traefik_duckdns_token}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.metrics.service=api@internal"
-      - "traefik.http.routers.metrics.entrypoints=metrics"
-      - "traefik.http.routers.metrics.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
+    name: alertmanager
 
   authelia:
-    image: authelia/authelia:4.29.4
-    container_name: authelia
-    hostname: authelia
-    restart: unless-stopped
-    healthcheck:
-      disable: true
-    expose:
-      - 7443
-    volumes:
-      - ./docker-configs/authelia/:/config
-    environment:
-      - TZ=${timezone}
-    labels:
-      - 'traefik.enable=true'
-      # Routers
-      - 'traefik.http.routers.authelia.rule=Host(`login.${traefik_duckdns_domain}`)'
-      - 'traefik.http.routers.authelia.entrypoints=https'
-      - 'traefik.http.routers.authelia.tls=true'
-      - 'traefik.http.routers.authelia.tls.certresolver=letsencrypt'
-      # Middleware
-      - 'traefik.http.middlewares.authelia.forwardauth.address=http://authelia:7443/api/verify?rd=https://login.${traefik_duckdns_domain}'
-      - 'traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true'
-      - 'traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=X-Forward-User'
+    name: authelia
+
+  diun:
+    name: diun
+
+  duplicati:
+    name: duplicati
+
+  duplicati_local:
+    name: duplicati_local
+
+  grafana:
+    name: grafana
+
+  homer:
+    name: homer
+
+  jackett:
+    name: jackett
+
+  lazylibrarian:
+    name: lazylibrarian
+
+  lidarr:
+    name: lidarr
+
+  plex:
+    name: plex
+
+  plex_transcode:
+    name: plex_transcode
+
+  portainer:
+    name: portainer
+
+  prometheus:
+    name: prometheus
+
+  radarr:
+    name: radarr
+
+  sonarr:
+    name: sonarr
+
+  traefik:
+    name: traefik
+
+  transmission:
+    name: transmission

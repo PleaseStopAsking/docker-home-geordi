@@ -20,9 +20,8 @@ entryPoints:
 #Enable dashboard
 api:
   dashboard: true
-#  insecure: true
 
-#Dynamic configuration will come from docker labels
+#Dynamic configuration will come from docker labels and files
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
@@ -36,7 +35,7 @@ certificatesResolvers:
   letsencrypt:
     acme:
       #caServer: https://acme-staging-v02.api.letsencrypt.org/directory # LetsEncrypt Staging Server - uncomment when testing
-      storage: /acme.json
+      storage: /traefik/acme.json
       httpChallenge:
         entryPoint: http
 
@@ -44,7 +43,7 @@ log:
   level: ERROR #- --log.level=DEBUG # (Default: error) DEBUG, INFO, WARN, ERROR, FATAL, PANIC
 
 accessLog:
-  filePath: /traefik.log
+  filePath: /traefik/traefik.log
   bufferingSize: 100
 
 metrics:
