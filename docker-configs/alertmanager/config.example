@@ -6,3 +6,5 @@ receivers:
     pushover_configs:
     - token: <replaceme>
       user_key: <replaceme>
+      send_resolved: false
+      priority: 0
