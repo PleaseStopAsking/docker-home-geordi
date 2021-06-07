@@ -42,7 +42,7 @@ scrape_configs:
         labels:
           instance: "geordi"
 
-  - job_name: "pihole"
+  - job_name: "adguard"
     static_configs:
       - targets: ["192.168.4.71:9617"]
         labels:
