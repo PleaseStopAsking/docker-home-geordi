@@ -59,13 +59,21 @@ services:
       - TZ=${timezone}
       - LOG_LEVEL=info
       - LOG_JSON=false
+      - DIUN_DB_PATH=diun.db
+      - DIUN_WATCH_WORKERS=20
+      - DIUN_WATCH_SCHEDULE=0 0 8 ? * SAT
+      - DIUN_WATCH_FIRSTCHECKNOTIF=false
+      - DIUN_WATCH_COMPAREDIGEST=true
+      - DIUN_NOTIF_PUSHOVER_TOKEN=${pushover_user_key}
+      - DIUN_NOTIF_PUSHOVER_RECIPIENT=${diun_pushover_token}
+      - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true
+      - DIUN_PROVIDERS_DOCKER_WATCHSTOPPED=false
     hostname: diun
     image: crazymax/diun:4.16.1
     restart: always
     volumes:
       - diun:/data
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./docker-configs/diun/diun.yml:/diun.yml:ro
 
   duplicati:
     container_name: duplicati
