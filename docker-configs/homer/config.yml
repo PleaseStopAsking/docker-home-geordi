@@ -89,10 +89,10 @@ services:
   - name: "Monitoring"
     icon: "fas fa-heartbeat"
     items:
-      - name: "Pi-hole"
-        logo: "assets/icons/pihole.png"
+      - name: "AdGuard"
+        logo: "assets/icons/adguard.png"
         subtitle: "DNS Blackhole"
-        url: "http://192.168.4.71/admin/index.php"
+        url: "http://192.168.4.71"
         target: "_blank"
       - name: "Portainer"
         logo: "assets/icons/portainer.png"
