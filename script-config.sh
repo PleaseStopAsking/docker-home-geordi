@@ -48,7 +48,7 @@ SMART_LOG=1
 # email, producing a potentially huge email. Keep this disabled for optimal
 # reading You can always check TOUCH and DIFF outputs using the TMP file. 1 to
 # enable, any other values to disable.
-VERBOSITY=0
+VERBOSITY=1
 
 # Set if disk spindown should be performed. Depending on your system, this may
 # not work. 1 to enable, any other values to disable.
