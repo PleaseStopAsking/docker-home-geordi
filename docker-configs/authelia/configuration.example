@@ -47,13 +47,12 @@ authentication_backend:
 access_control:
   default_policy: deny
   rules:
-    - domain: "*"
-      networks:
-        - 192.168.0.0/24
+    - domain: "*.replaceme.duckdns.org"
       policy: bypass
+      networks:
+        - 192.168.4.0/24
 
-    - domain:
-      - replaceme.replaceme.duckdns.org
+    - domain: "*.replaceme.duckdns.org"
       policy: two_factor
 
 session:
@@ -62,7 +61,7 @@ session:
   same_site: lax
   expiration: 1h
   inactivity: 10m
-  remember_me_duration:  1M
+  remember_me_duration:  5m
 
 regulation:
   max_retries: 3
