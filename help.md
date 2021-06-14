@@ -91,3 +91,38 @@ This process must be done at both the OpenMediaVault GUI level as well as the CL
 ```docker run busybox ping -c 1 192.203.230.10```
 
 ```docker run busybox nslookup google.com```
+
+## Traefik label example for authelia auth
+    - traefik.enable=true
+    - traefik.http.services.transmission.loadbalancer.server.port=9091
+    - traefik.http.routers.transmission.rule=Host(`transmission.${traefik_duckdns_domain}`)
+    - traefik.http.routers.transmission.entrypoints=https
+    - traefik.http.routers.transmission.tls=true
+    - traefik.http.routers.transmission.tls.certresolver=letsencrypt
+    - traefik.http.routers.transmission.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
+
+## Authelia compose example
+  authelia:
+    container_name: authelia
+    environment:
+      - TZ=${timezone}
+    expose:
+      - 7443
+    healthcheck:
+      disable: true
+    hostname: authelia
+    image: authelia/authelia:4.29.4
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.authelia.rule=Host(`login.${traefik_duckdns_domain}`)
+      - traefik.http.routers.authelia.entrypoints=https
+      - traefik.http.routers.authelia.tls=true
+      - traefik.http.routers.authelia.tls.certresolver=letsencrypt
+      - traefik.http.middlewares.authelia.forwardauth.address=http://authelia:7443/api/verify?rd=https://login.${traefik_duckdns_domain}
+      - traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true
+      - traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=X-Forward-User
+    restart: unless-stopped
+    volumes:
+      - authelia:/config
+      - ./docker-configs/authelia/configuration.yml:/config/configuration.yml:ro
+      - ./docker-configs/authelia/users_database.yml:/config/users_database.yml:ro

@@ -145,3 +145,8 @@ services:
         subtitle: "Alert Notifications"
         url: "https://pushover.net"
         target: "_blank"
+      - name: "Tailscale"
+        logo: "assets/icons/tailscale.png"
+        subtitle: "Mesh VPN"
+        url: "https://login.tailscale.com/admin"
+        target: "_blank"

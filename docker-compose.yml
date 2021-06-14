@@ -15,31 +15,6 @@ services:
       - alertmanager:/alertmanager
       - ./docker-configs/alertmanager/config.yml:/config.yml:ro
 
-  authelia:
-    container_name: authelia
-    environment:
-      - TZ=${timezone}
-    expose:
-      - 7443
-    healthcheck:
-      disable: true
-    hostname: authelia
-    image: authelia/authelia:4.29.4
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.authelia.rule=Host(`login.${traefik_duckdns_domain}`)
-      - traefik.http.routers.authelia.entrypoints=https
-      - traefik.http.routers.authelia.tls=true
-      - traefik.http.routers.authelia.tls.certresolver=letsencrypt
-      - traefik.http.middlewares.authelia.forwardauth.address=http://authelia:7443/api/verify?rd=https://login.${traefik_duckdns_domain}
-      - traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true
-      - traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=X-Forward-User
-    restart: unless-stopped
-    volumes:
-      - authelia:/config
-      - ./docker-configs/authelia/configuration.yml:/config/configuration.yml:ro
-      - ./docker-configs/authelia/users_database.yml:/config/users_database.yml:ro
-
   cadvisor:
     container_name: cadvisor
     hostname: cadvisor
@@ -101,14 +76,6 @@ services:
       - GF_INSTALL_PLUGINS=grafana-piechart-panel
     hostname: grafana
     image: grafana/grafana:7.5.6
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.grafana.loadbalancer.server.port=3000
-      - traefik.http.routers.grafana.rule=Host(`grafana.${traefik_duckdns_domain}`)
-      - traefik.http.routers.grafana.entrypoints=https
-      - traefik.http.routers.grafana.tls=true
-      - traefik.http.routers.grafana.tls.certresolver=letsencrypt
-      - traefik.http.routers.grafana.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
     ports:
       - 3000:3000
     restart: unless-stopped
@@ -173,14 +140,6 @@ services:
       - PUID=${uid}
     hostname: lidarr
     image: linuxserver/lidarr:0.8.1.2135-ls48
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.lidarr.loadbalancer.server.port=8686
-      - traefik.http.routers.lidarr.rule=Host(`lidarr.${traefik_duckdns_domain}`)
-      - traefik.http.routers.lidarr.entrypoints=https
-      - traefik.http.routers.lidarr.tls=true
-      - traefik.http.routers.lidarr.tls.certresolver=letsencrypt
-      - traefik.http.routers.lidarr.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
     ports:
       - 8686:8686
     restart: unless-stopped
@@ -236,14 +195,6 @@ services:
     container_name: portainer
     hostname: portainer
     image: portainer/portainer-ce:linux-amd64-2.5.0
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.portainer.loadbalancer.server.port=9000
-      - traefik.http.routers.portainer.rule=Host(`portainer.${traefik_duckdns_domain}`)
-      - traefik.http.routers.portainer.entrypoints=https
-      - traefik.http.routers.portainer.tls=true
-      - traefik.http.routers.portainer.tls.certresolver=letsencrypt
-      - traefik.http.routers.portainer.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
     ports:
       - 9000:9000
       #- 8000:8000
@@ -285,14 +236,6 @@ services:
       - PUID=${uid}
     hostname: radarr
     image: linuxserver/radarr:3.1.1.4954-ls104
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.radarr.loadbalancer.server.port=7878
-      - traefik.http.routers.radarr.rule=Host(`radarr.${traefik_duckdns_domain}`)
-      - traefik.http.routers.radarr.entrypoints=https
-      - traefik.http.routers.radarr.tls=true
-      - traefik.http.routers.radarr.tls.certresolver=letsencrypt
-      - traefik.http.routers.radarr.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -310,20 +253,27 @@ services:
       - PUID=${uid}
     hostname: sonarr
     image: linuxserver/sonarr:3.0.6.1196-ls104
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.sonarr.loadbalancer.server.port=8989
-      - traefik.http.routers.sonarr.rule=Host(`sonarr.${traefik_duckdns_domain}`)
-      - traefik.http.routers.sonarr.entrypoints=https
-      - traefik.http.routers.sonarr.tls=true
-      - traefik.http.routers.sonarr.tls.certresolver=letsencrypt
-      - traefik.http.routers.sonarr.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
     ports:
       - 8989:8989
     restart: unless-stopped
     volumes:
       - sonarr:/config
       - ${data_folder_path}:/data
+
+  tailscale:
+    container_name: tailscale
+    hostname: geordi
+    image: pleasestopasking/tailscale:latest
+    restart: unless-stopped
+    volumes:
+      - tailscale:/var/lib
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+    command: tailscaled
+    network_mode: host
+    # docker exec tailscale tailscale up --advertise-routes=${docker_host_network_cidr}
+    # approve subnet relay in tailscale UI
 
   traefik:
     container_name: traefik
@@ -372,14 +322,6 @@ services:
       - TRANSMISSION_INCOMPLETE_DIR=${transmission_incomplete_dir}
     hostname: transmission
     image: haugene/transmission-openvpn:3.6
-    labels:
-      - traefik.enable=true
-      - traefik.http.services.transmission.loadbalancer.server.port=9091
-      - traefik.http.routers.transmission.rule=Host(`transmission.${traefik_duckdns_domain}`)
-      - traefik.http.routers.transmission.entrypoints=https
-      - traefik.http.routers.transmission.tls=true
-      - traefik.http.routers.transmission.tls.certresolver=letsencrypt
-      - traefik.http.routers.transmission.middlewares=authelia@docker,baseline-secureheaders@file,baseline-ratelimits@file
     logging:
       driver: json-file
       options:
@@ -395,9 +337,6 @@ services:
 volumes:
   alertmanager:
     name: alertmanager
-
-  authelia:
-    name: authelia
 
   diun:
     name: diun
@@ -440,6 +379,9 @@ volumes:
 
   sonarr:
     name: sonarr
+
+  tailscale:
+    name: tailscale
 
   traefik:
     name: traefik
