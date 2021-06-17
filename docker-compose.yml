@@ -7,7 +7,7 @@ services:
       - "--config.file=/config.yml"
     container_name: alertmanager
     hostname: alertmanager
-    image: prom/alertmanager:v0.21.0
+    image: prom/alertmanager:v0.22.2
     ports:
       - 9093:9093
     restart: unless-stopped
@@ -44,7 +44,7 @@ services:
       - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true
       - DIUN_PROVIDERS_DOCKER_WATCHSTOPPED=false
     hostname: diun
-    image: crazymax/diun:4.16.1
+    image: crazymax/diun:4.17.0
     restart: always
     volumes:
       - diun:/data
@@ -57,7 +57,7 @@ services:
       - GUID=${gid}
       - PUID=${uid}
     hostname: duplicati
-    image: linuxserver/duplicati:v2.0.6.1-2.0.6.1_beta_2021-05-03-ls99
+    image: linuxserver/duplicati:v2.0.6.3-2.0.6.3_beta_2021-06-17-ls102
     ports:
       - 8200:8200
     restart: unless-stopped
@@ -75,7 +75,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${grafana_password}
       - GF_INSTALL_PLUGINS=grafana-piechart-panel
     hostname: grafana
-    image: grafana/grafana:7.5.6
+    image: grafana/grafana:7.5.8
     ports:
       - 3000:3000
     restart: unless-stopped
@@ -106,7 +106,7 @@ services:
       - TZ=${timezone}
       - AUTO_UPDATE=true
     hostname: jackett
-    image: linuxserver/jackett:v0.18.31-ls31
+    image: linuxserver/jackett:v0.18.345-ls33
     ports:
       - 9117:9117
     restart: unless-stopped
@@ -122,7 +122,7 @@ services:
       - GUID=${gid}
       - PUID=${uid}
     hostname: lazylibrarian
-    image: linuxserver/lazylibrarian:16da8168-ls24
+    image: linuxserver/lazylibrarian:8e4bf962-ls27
     ports:
       - 5299:5299
     restart: unless-stopped
@@ -139,7 +139,7 @@ services:
       - GUID=${gid}
       - PUID=${uid}
     hostname: lidarr
-    image: linuxserver/lidarr:0.8.1.2135-ls48
+    image: linuxserver/lidarr:0.8.1.2135-ls50
     ports:
       - 8686:8686
     restart: unless-stopped
@@ -166,7 +166,7 @@ services:
       - ALLOWED_NETWORKS=${docker_host_network_cidr}
       - HOSTNAME=${plex_hostname}
     hostname: plex
-    image: plexinc/pms-docker:1.22.3.4523-d0ce30438
+    image: plexinc/pms-docker:1.23.2.4656-85f0adf5b
     labels:
       - traefik.enable=true
       - traefik.http.services.plex.loadbalancer.server.port=32400
@@ -177,6 +177,10 @@ services:
       - traefik.http.routers.plex.middlewares=baseline-secureheaders@file,baseline-ratelimits@file,plex-headers
       - traefik.http.middlewares.plex-headers.headers.accesscontrolalloworiginlist=https://plex.${traefik_duckdns_domain}
       - "traefik.http.middlewares.plex-headers.headers.contentSecurityPolicy=default-src 'none'; base-uri 'self'; script-src 'self' 'sha256-4yWHSc589xcanc7GAAy3++M4EvUxNtUsJySeoYEE6z8=' 'sha256-9YWnVu29Ew4LEW4tEiPWEdcHvzlbbwpiazu4PZR3oTY='; style-src 'self'; img-src 'self' https://provider-static.plex.tv data: blob:; font-src 'self' data:; connect-src 'self' https://plex.tv https://*.plex.direct:* wss://*.plex.direct:* wss://pubsub.plex.tv; media-src 'self' https://*.plex.direct:*; object-src 'self'; child-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; referrer no-referrer"
+      #- diun.watch_repo=true
+      #- diun.include_tags=^\d+\.\d+\..*
+      #- diun.exclude_tags=^latest$$;^plexpass$$;^public$$;^beta$$
+      #- diun.max_tags=10
     ports:
       - 32400:32400/tcp
       - 32410:32410/udp
@@ -194,7 +198,7 @@ services:
   portainer:
     container_name: portainer
     hostname: portainer
-    image: portainer/portainer-ce:linux-amd64-2.5.0
+    image: portainer/portainer-ce:2.5.1
     ports:
       - 9000:9000
       #- 8000:8000
@@ -216,7 +220,7 @@ services:
     environment:
       - TZ=${timezone}
     hostname: prometheus
-    image: prom/prometheus:v2.26.0
+    image: prom/prometheus:v2.27.1
     ports:
       - 9090:9090
     restart: unless-stopped
@@ -235,7 +239,7 @@ services:
       - GUID=${gid}
       - PUID=${uid}
     hostname: radarr
-    image: linuxserver/radarr:3.1.1.4954-ls104
+    image: linuxserver/radarr:3.2.2.5080-ls106
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -252,7 +256,7 @@ services:
       - GUID=${gid}
       - PUID=${uid}
     hostname: sonarr
-    image: linuxserver/sonarr:3.0.6.1196-ls104
+    image: linuxserver/sonarr:3.0.6.1196-ls108
     ports:
       - 8989:8989
     restart: unless-stopped
