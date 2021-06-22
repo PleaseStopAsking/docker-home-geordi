@@ -267,7 +267,7 @@ services:
   tailscale:
     container_name: tailscale
     hostname: geordi
-    image: pleasestopasking/tailscale:1.8.1
+    image: pleasestopasking/tailscale:1.8.7
     restart: unless-stopped
     volumes:
       - tailscale:/var/lib
