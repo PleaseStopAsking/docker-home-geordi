@@ -275,7 +275,7 @@ services:
     cap_add:
       - net_admin
     command: tailscaled
-    network_mode: host
+    #network_mode: host
     # docker exec tailscale tailscale up --advertise-routes=${docker_host_network_cidr}
     # approve subnet relay in tailscale UI
 
