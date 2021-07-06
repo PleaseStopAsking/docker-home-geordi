@@ -174,7 +174,7 @@ services:
       - traefik.http.routers.plex.entrypoints=https
       - traefik.http.routers.plex.tls=true
       - traefik.http.routers.plex.tls.certresolver=letsencrypt
-      - traefik.http.routers.plex.middlewares=baseline-secureheaders@file,baseline-ratelimits@file,plex-headers
+      - traefik.http.routers.plex.middlewares=plex-headers
       - traefik.http.middlewares.plex-headers.headers.accesscontrolalloworiginlist=https://plex.${traefik_duckdns_domain}
       - "traefik.http.middlewares.plex-headers.headers.contentSecurityPolicy=default-src 'none'; base-uri 'self'; script-src 'self' 'sha256-4yWHSc589xcanc7GAAy3++M4EvUxNtUsJySeoYEE6z8=' 'sha256-9YWnVu29Ew4LEW4tEiPWEdcHvzlbbwpiazu4PZR3oTY='; style-src 'self'; img-src 'self' https://provider-static.plex.tv data: blob:; font-src 'self' data:; connect-src 'self' https://plex.tv https://*.plex.direct:* wss://*.plex.direct:* wss://pubsub.plex.tv; media-src 'self' https://*.plex.direct:*; object-src 'self'; child-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; referrer no-referrer"
       #- diun.watch_repo=true

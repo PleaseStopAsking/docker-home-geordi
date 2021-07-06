@@ -13,7 +13,11 @@ entryPoints:
           scheme: https
           permanent: true
   https:
-    address: ":443"
+    address: ':443'
+    http:
+      middlewares:
+        - baseline-secureheaders@file
+        - baseline-ratelimits@file
   metrics:
     address: ":8441"
 
