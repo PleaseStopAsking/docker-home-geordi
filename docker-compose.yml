@@ -44,7 +44,7 @@ services:
       - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true
       - DIUN_PROVIDERS_DOCKER_WATCHSTOPPED=false
     hostname: diun
-    image: crazymax/diun:4.17.0
+    image: crazymax/diun:4.19.0
     restart: always
     volumes:
       - diun:/data
