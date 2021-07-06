@@ -198,7 +198,7 @@ services:
   portainer:
     container_name: portainer
     hostname: portainer
-    image: portainer/portainer-ce:2.5.1
+    image: portainer/portainer-ce:2.6.0
     ports:
       - 9000:9000
       #- 8000:8000
