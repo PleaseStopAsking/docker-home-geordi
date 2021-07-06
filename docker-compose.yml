@@ -256,7 +256,7 @@ services:
       - GUID=${gid}
       - PUID=${uid}
     hostname: sonarr
-    image: linuxserver/sonarr:3.0.6.1196-ls108
+    image: linuxserver/sonarr:3.0.6.1265-ls111
     ports:
       - 8989:8989
     restart: unless-stopped
