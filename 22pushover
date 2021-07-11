@@ -17,4 +17,7 @@ send_message (){
     "$url"
 }
 
-send_message "${OMV_NOTIFICATION_MESSAGE_FILE}"
+# skips the last part of the message
+content=$(head -n -4 "${OMV_NOTIFICATION_MESSAGE_FILE}")
+
+send_message "${content[@]}"
