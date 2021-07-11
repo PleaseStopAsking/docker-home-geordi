@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# add the file to /usr/share/openmediavault/notification/sink.d/ without any file extension
+# add tokens to file
+# run chmod +x /usr/share/openmediavault/notification/sink.d/22pushover to make it executable
+
+url="https://api.pushover.net/1/messages.json"
+pushover_user="<user_token>"
+pushover_token="<app_token>"
+
+send_message (){
+  curl -s \
+    --form-string "token=$pushover_token" \
+    --form-string "user=$pushover_user" \
+    --form-string "message=$1" \
+    --form-string "title=${OMV_NOTIFICATION_SUBJECT}"  \
+    "$url"
+}
+
+send_message "${OMV_NOTIFICATION_MESSAGE_FILE}"
