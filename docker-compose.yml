@@ -264,21 +264,6 @@ services:
       - sonarr:/config
       - ${data_folder_path}:/data
 
-  tailscale:
-    container_name: tailscale
-    hostname: geordi
-    image: pleasestopasking/tailscale:1.10.1
-    restart: unless-stopped
-    volumes:
-      - tailscale:/var/lib
-      - /dev/net/tun:/dev/net/tun
-    cap_add:
-      - net_admin
-    command: tailscaled
-    #network_mode: host
-    # docker exec tailscale tailscale up --advertise-routes=${docker_host_network_cidr}
-    # approve subnet relay in tailscale UI
-
   traefik:
     container_name: traefik
     environment:
@@ -383,9 +368,6 @@ volumes:
 
   sonarr:
     name: sonarr
-
-  tailscale:
-    name: tailscale
 
   traefik:
     name: traefik
