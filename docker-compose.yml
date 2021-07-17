@@ -150,7 +150,7 @@ services:
   node-exporter:
     container_name: node-exporter
     hostname: node-exporter
-    image: prom/node-exporter:v1.1.2
+    image: prom/node-exporter:v1.2.0
     ports:
       - 9100:9100
     restart: unless-stopped
