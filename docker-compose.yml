@@ -230,6 +230,20 @@ services:
       - ./docker-configs/prometheus/alertrules.yml:/etc/prometheus/alertrules.yml:ro
       - ./docker-configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
+  prowlarr:
+    container_name: prowlarr
+    depends_on:
+      - transmission
+    environment:
+      - TZ=${timezone}
+    hostname: prowlarr
+    image: linuxserver/prowlarr:nightly
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    volumes:
+      - prowlarr:/config
+
   radarr:
     container_name: radarr
     depends_on:
@@ -362,6 +376,9 @@ volumes:
 
   prometheus:
     name: prometheus
+
+  prowlarr:
+    name: prowlarr
 
   radarr:
     name: radarr
