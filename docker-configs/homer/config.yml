@@ -135,11 +135,6 @@ services:
   - name: "External Services"
     icon: "fa fa-cloud"
     items:
-      - name: "Duck DNS"
-        logo: "assets/icons/duckdns.png"
-        subtitle: "Dynamic DNS"
-        url: "https://www.duckdns.org"
-        target: "_blank"
       - name: "Pushover"
         logo: "assets/icons/pushover.svg"
         subtitle: "Alert Notifications"
