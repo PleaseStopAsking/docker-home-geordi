@@ -162,7 +162,7 @@ services:
     environment:
       - TZ=${timezone}
       - PLEX_CLAIM=${plex_claim_token}
-      - ADVERTISE_IP=https://plex.${traefik_duckdns_domain}:443,https://${docker_host_ip}:32400
+      - ADVERTISE_IP=https://plex.${traefik_public_domain}:443,https://${docker_host_ip}:32400
       - ALLOWED_NETWORKS=${docker_host_network_cidr}
       - HOSTNAME=${plex_hostname}
     hostname: plex
@@ -170,12 +170,12 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.services.plex.loadbalancer.server.port=32400
-      - traefik.http.routers.plex.rule=Host(`plex.${traefik_duckdns_domain}`)
+      - traefik.http.routers.plex.rule=Host(`plex.${traefik_public_domain}`)
       - traefik.http.routers.plex.entrypoints=https
       - traefik.http.routers.plex.tls=true
       - traefik.http.routers.plex.tls.certresolver=letsencrypt
       - traefik.http.routers.plex.middlewares=plex-headers
-      - traefik.http.middlewares.plex-headers.headers.accesscontrolalloworiginlist=https://plex.${traefik_duckdns_domain}
+      - traefik.http.middlewares.plex-headers.headers.accesscontrolalloworiginlist=https://plex.${traefik_public_domain}
       - "traefik.http.middlewares.plex-headers.headers.contentSecurityPolicy=default-src 'none'; base-uri 'self'; script-src 'self' 'sha256-4yWHSc589xcanc7GAAy3++M4EvUxNtUsJySeoYEE6z8=' 'sha256-9YWnVu29Ew4LEW4tEiPWEdcHvzlbbwpiazu4PZR3oTY='; style-src 'self'; img-src 'self' https://provider-static.plex.tv data: blob:; font-src 'self' data:; connect-src 'self' https://plex.tv https://*.plex.direct:* wss://*.plex.direct:* wss://pubsub.plex.tv; media-src 'self' https://*.plex.direct:*; object-src 'self'; child-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; referrer no-referrer"
       #- diun.watch_repo=true
       #- diun.include_tags=^\d+\.\d+\..*
@@ -280,8 +280,6 @@ services:
 
   traefik:
     container_name: traefik
-    environment:
-      - DUCKDNS_TOKEN=${traefik_duckdns_token}
     hostname: traefik
     image: traefik:v2.4
     labels:

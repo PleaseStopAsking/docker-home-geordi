@@ -13,7 +13,7 @@ entryPoints:
           scheme: https
           permanent: true
   https:
-    address: ':443'
+    address: ":443"
     http:
       middlewares:
         - baseline-secureheaders@file
@@ -40,8 +40,9 @@ certificatesResolvers:
     acme:
       #caServer: https://acme-staging-v02.api.letsencrypt.org/directory # LetsEncrypt Staging Server - uncomment when testing
       storage: /traefik/acme.json
-      httpChallenge:
-        entryPoint: http
+      tlsChallenge: {}
+      #httpChallenge:
+      #  entryPoint: http
 
 log:
   level: ERROR #- --log.level=DEBUG # (Default: error) DEBUG, INFO, WARN, ERROR, FATAL, PANIC
